@@ -632,6 +632,10 @@ a.fa-bell {
     background-color: white!important;
 }
 
+.pale-green p.asheuh {
+    color: #A9CCE3;
+}
+
 .panel.pale-green {
     border-radius: 0.5em;
     border: 1px solid #A9CCE3;
@@ -640,8 +644,9 @@ a.fa-bell {
 .btn {
     color: white;
     border: none;
-    padding: 8px 32px;
+    padding: 4px 32px;
     text-align: center;
+    border-radius: 2em;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
@@ -713,4 +718,8 @@ a.fa-bell {
     .search-container input[type=text] {
         border: 1px solid #ccc;
     }
+}
+
+ul.list {
+    list-style-type: none;
 }
