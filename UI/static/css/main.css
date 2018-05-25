@@ -564,7 +564,7 @@ span.num {
 a.fa-bell {
     position: relative;
     font-size: 1.8em;
-    color: 17202A;
+    color: #A9CCE3;
     cursor: pointer;
 }
 
@@ -601,7 +601,7 @@ a.fa-bell {
     a.fa-bell {
         position: relative;
         font-size: 1.8em;
-        color: 17202A;
+        color: #17202A;
         cursor: pointer;
         right: -3em;
     }
@@ -609,6 +609,7 @@ a.fa-bell {
 
 .style-row a {
     text-decoration: none;
+    color: #5DADE2;
 }
 
 .panel:after,
@@ -687,6 +688,10 @@ a.fa-bell {
     border: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 .search-container button {
     float: right;
     padding: 6px 10px;
@@ -722,4 +727,44 @@ a.fa-bell {
 
 ul.list {
     list-style-type: none;
+}
+
+.details h4 {
+    font-family: 'SIMPSON';
+    font-size: 16px;
+}
+
+.create {
+    margin-top: 10em;
+}
+
+.circle:before {
+    content: ' \25CF';
+    font-size: 50px;
+}
+
+.create-as {
+    background-color: #5DADE2;
+}
+
+.create-as i {
+    font-size: 5em;
+}
+
+.dad {
+    padding-left: 20px;
+    margin-top: 2.1em;
+    font-size: 18px;
+}
+
+p.dad {
+    color: white;
+}
+
+.mom {
+    padding-left: 10px;
+}
+
+p.mom {
+    color: white;
 }
