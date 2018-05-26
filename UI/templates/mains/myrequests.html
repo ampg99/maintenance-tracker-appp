@@ -100,6 +100,24 @@
                     </tbody>
                 </table>
             </div>
+            <div id="id01" class="modal">
+
+                <form class="modal-content animate" action="/action_page.php">
+                    <div class="scontainer">
+                        <label style="float:left;" for="uname"><b>Your name</b></label>
+                        <input type="text" placeholder="Enter Username" name="uname" required>
+                        <label style="float:left" for="psw"><b>Request type</b></label>
+                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <label style="float:left" for="psw"><b>Describe the problem</b></label>
+                        <textarea id="subject" name="subject" placeholder="Description..." style="height:200px"></textarea>
+                        <a href="#" class="btn btn-success" type="submit">Submit</a>
+                    </div>
+
+                    <div class="container" style="background-color:#f1f1f1">
+                        <a class="btn btn-danger" href="#" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <div class="footer">
