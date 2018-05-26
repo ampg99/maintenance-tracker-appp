@@ -319,3 +319,56 @@ form {
         width: 100%;
     }
 }
+
+.signin {
+    background-color: #f1f1f17c;
+    text-align: center;
+}
+
+#signup {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+ul.myNav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 43px;
+    overflow: hidden;
+    border: 1px solid rgba(128, 128, 128, 0.534);
+}
+
+ul.myNav li {
+    float: left;
+}
+
+ul.myNav li a {
+    display: block;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.myNav li a:hover:not(.active) {
+    background-color: white;
+}
+
+ul.myNav li a.active {
+    background-color: #4CAF50;
+}
+
+ul.myNav li.right {
+    float: right;
+}
+
+@media screen and (max-width: 600px) {
+    ul.myNav li.right,
+    ul.myNav li {
+        float: none;
+    }
+}
