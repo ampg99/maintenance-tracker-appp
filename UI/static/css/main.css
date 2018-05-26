@@ -597,3 +597,13 @@ ul.myNav li.right {
 .my-footer p a:hover {
     text-decoration: underline
 }
+
+input[type=text],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
