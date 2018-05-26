@@ -455,3 +455,121 @@ ul.myNav li.right {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.774);
 }
+
+.footer {
+    position: fixed;
+    left: 15%;
+    bottom: 0;
+    width: 85%;
+    float: right;
+    color: #343434;
+    text-align: center;
+    border-top: 0.2px solid #808080ee;
+}
+
+.footer p {
+    margin-top: 1em;
+}
+
+.footer p a {
+    color: blue;
+    text-decoration: none;
+    margin: 0 5px
+}
+
+.footer p a:hover {
+    text-decoration: underline
+}
+
+@media all and (max-width: 1093px) {
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        float: right;
+        color: #343434;
+        text-align: center;
+        border-top: 0.2px solid #808080ee;
+    }
+}
+
+#requests {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: 0;
+}
+
+#requests td,
+#requests th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#requests tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#requests tr:hover {
+    background-color: #ddd;
+}
+
+#requests th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: gold;
+    color: black;
+}
+
+#requests tr:nth-of-type(odd) {
+    background: #eee;
+}
+
+@media only screen and (max-width: 760px),
+(min-width: 768px) and (max-width: 1024px) {
+    /* Force table to not be like tables anymore */
+    .my-container {
+        width: 100%;
+        margin: auto;
+        padding: 20px;
+    }
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    tr {
+        border: 1px solid #ccc;
+    }
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+    td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+    .tab h1 {
+        text-align: center;
+    }
+}

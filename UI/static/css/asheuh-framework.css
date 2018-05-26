@@ -67,6 +67,19 @@ Navbar
     .asheuh-navbar {
         width: 100%;
     }
+    .shownone {
+        display: none;
+    }
+    .asheuh-navbar {
+        background-color: #17202A;
+    }
+    .asheuh-navbar ul li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
 }
 
 
@@ -162,7 +175,7 @@ dropdown menu
     display: block;
     border: none;
     background-color: #212F3D;
-    width: 86%;
+    width: 100%;
     text-align: left;
     cursor: pointer;
     outline: 0;
@@ -178,7 +191,7 @@ dropdown menu
         float: none;
         padding: 15px;
         outline: 0;
-        width: 90.5%;
+        width: 100%;
     }
     .dropdown-container li a:hover {
         background-color: none;
