@@ -573,3 +573,27 @@ ul.myNav li.right {
         text-align: center;
     }
 }
+
+.my-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: #343434;
+    text-align: center;
+    border-top: 0.2px solid #808080ee;
+}
+
+.my-footer p {
+    margin-top: 1em;
+}
+
+.my-footer p a {
+    color: blue;
+    text-decoration: none;
+    margin: 0 5px
+}
+
+.my-footer p a:hover {
+    text-decoration: underline
+}
