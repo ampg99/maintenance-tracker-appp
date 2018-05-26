@@ -395,3 +395,63 @@ ul.myNav li.right {
     margin-top: 5px;
     text-align: center;
 }
+
+* {
+    box-sizing: border-box
+}
+
+.bar {
+    width: 100%;
+    background-color: #ddd;
+}
+
+.pops {
+    text-align: right;
+    padding-right: 20px;
+    line-height: 7px;
+    margin-top: 3em;
+    border-radius: 3px solid;
+    color: white;
+}
+
+.mal {
+    width: 10%;
+    background-color: gold;
+}
+
+.dis {
+    width: 3%;
+    background-color: #2196F3;
+}
+
+.command {
+    width: 10%;
+    background-color: #f44336;
+}
+
+.phish {
+    width: 40%;
+    background-color: #808080;
+}
+
+.this-container {
+    background-color: #F4ECF7;
+}
+
+.events {
+    background-color: rgba(255, 255, 255, 0.774);
+    ;
+}
+
+.top {
+    margin-top: -1.3em;
+}
+
+.summary p {
+    margin-top: -1em;
+}
+
+.summary {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.774);
+}
