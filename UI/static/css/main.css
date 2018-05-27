@@ -456,7 +456,7 @@ ul.myNav li.right {
 }
 
 .footer {
-    position: fixed;
+    position: absolute;
     left: 15%;
     bottom: 0;
     width: 85%;
