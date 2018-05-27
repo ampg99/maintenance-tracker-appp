@@ -14,19 +14,38 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/asheuh/Maintenance-Tracker-App.svg)
 
+#### Project Overview
 
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
+
+#### Required Features
+
+- Users can create an account and log in.
+- The users should be able to make maintenance or repairs request.
+- An admin should be able to approve/reject a repair/maintenance request.
+- The admin should be able to mark request as resolved once it is done.
+- The admin should be able to view all maintenance/repairs requests on the application
+- The admin should be able to filter requests
+- The user can view all his/her requests
 
 
 #### 1. Sign Up for the Service
 
-- Sign up at: https://nodesecurity.io/signup
+- Sign up at: https://asheuh.github.io/Maintenance-Tracker-App/
+```
 (_you need to use a "real" email address ...
 Maintenance-Tracker-App will send you and alert if one of your projects has a security vulnerability so make sure it's
 an email address you check regularly or better one that you receive on your phone!_)
+```
 
 - The sign up form looks like the one below:
+
 ![newsignup](https://user-images.githubusercontent.com/22955146/40570633-6f4cb02c-6095-11e8-975a-ebac778d8dbc.png)
+- Fileds required to sign up
+```Username```
+```Email address```
+```Password```
+```Conform Password```
 
 #### 2. Create your "Request" 
 
