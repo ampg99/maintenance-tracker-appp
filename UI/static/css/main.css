@@ -355,7 +355,7 @@ ul.myNav li a {
 }
 
 ul.myNav li a:hover:not(.active) {
-    background-color: white;
+    background-color: #17202A;
 }
 
 ul.myNav li a.active {
@@ -705,13 +705,43 @@ span.psw {
         border: 1px solid #888;
         width: 80%;
     }
-
 }
 
-.Bio {
-    padding: 10px;
+.index {
+    background-color: #17202A;
+}
+.index ul li a {
+    color :white;
 }
 
-.checked {
-    color: orange;
+.dropdown {
+    float: right;
+    overflow: hidden;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 260px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-top:1em;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

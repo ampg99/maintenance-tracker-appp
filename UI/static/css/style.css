@@ -49,7 +49,8 @@ ul.myNav li a {
 }
 
 ul.myNav li a:hover:not(.active) {
-    background-color: white;
+    background-color:  none;
+    color: blue
 }
 
 ul.myNav li a.active {
