@@ -240,7 +240,9 @@ Grid system
     width: 100%;
     max-width: 1200px;
 }
-
+.span-col-3{grid-column: span 3 / auto;}
+.span-col-4{grid-column: span 4 / auto;}
+.span-col-5{grid-column: span 5 / auto;}
 .grid-6 {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
