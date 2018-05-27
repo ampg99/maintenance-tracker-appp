@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/asheuh/Maintenance-Tracker-App.svg)](https://travis-ci.org/asheuh/Maintenance-Tracker-App)
 [![Dependency Status](http://img.shields.io/gemnasium/asheuh/Maintenance-Tracker-App.svg)](https://gemnasium.com/asheuh/Maintenance-Tracker-App)
 [![Coverage Status](http://img.shields.io/coveralls/asheuh/Maintenance-Tracker-App.svg)](https://coveralls.io/r/asheuh/Maintenance-Tracker-App)
-[![Code Climate](http://img.shields.io/codeclimate/github/asheuh/Maintenance-Tracker-App.svg)](https://codeclimate.com/github/asheuh/Maintenance-Tracker-App)
+[![Last commit](http://img.shields.io/last-commit/github/asheuh/Maintenance-Tracker-App.svg)](https://codeclimate.com/github/asheuh/Maintenance-Tracker-App)
 [![Gem Version](http://img.shields.io/gem/v/suchgem.svg)](https://rubygems.org/gems/suchgem)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![Badges](http://img.shields.io/:badges-7/7-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
