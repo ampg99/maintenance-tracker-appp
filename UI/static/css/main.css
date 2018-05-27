@@ -482,7 +482,7 @@ ul.myNav li.right {
 
 @media all and (max-width: 1093px) {
     .footer {
-        position: fixed;
+        position: absolute;
         left: 0;
         bottom: 0;
         width: 100%;
