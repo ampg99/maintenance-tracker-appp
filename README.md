@@ -1,5 +1,5 @@
 # Maintenance-Tracker-App
-badger badge
+
 [![Build Status](https://travis-ci.org/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
 [![Dependency Status](http://img.shields.io/gemnasium/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
 [![Coverage Status](http://img.shields.io/coveralls/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
