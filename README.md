@@ -1,10 +1,5 @@
 # Maintenance-Tracker-App
 
-[![Build Status](https://travis-ci.org/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Dependency Status](http://img.shields.io/gemnasium/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Coverage Status](http://img.shields.io/coveralls/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Code Climate](http://img.shields.io/codeclimate/github/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Gem Version](http://img.shields.io/gem/v/suchgem.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
 [![Badges](http://img.shields.io/:badges-7/7-ff6799.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
