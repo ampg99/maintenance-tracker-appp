@@ -409,7 +409,6 @@ ul.myNav li.right {
     text-align: right;
     padding-right: 20px;
     line-height: 7px;
-    margin-top: 3em;
     border-radius: 3px solid;
     color: white;
 }
@@ -457,7 +456,7 @@ ul.myNav li.right {
 }
 
 .footer {
-    position: fixed;
+    position: absolute;
     left: 15%;
     bottom: 0;
     width: 85%;
@@ -483,7 +482,7 @@ ul.myNav li.right {
 
 @media all and (max-width: 1093px) {
     .footer {
-        position: fixed;
+        position: absolute;
         left: 0;
         bottom: 0;
         width: 100%;
