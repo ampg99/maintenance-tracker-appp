@@ -59,7 +59,7 @@ so you can keep track of  your requests
 - If you want to _encourage_ people to contribute to this project, by reminding them that you _welcome_ their input go to the app and use it
 
 ### Template
-- You can view the UI template on [Github Pages](https://gitaumoses4.github.io/maintenance-tracker)
+- You can view the UI template on [Github Pages](https://asheuh.github.io/Maintenance-Tracker-App/)
 
 ## Authors
 
