@@ -1,6 +1,7 @@
 # Maintenance-Tracker-App
 
-![GitHub issue author](https://img.shields.io/github/issues/detail/u/asheuh/Maintenance-Tracker-App/979.svg)
+
+![GitHub issue author](https://img.shields.io/github/issues/detail/u/badges/shields/979.svg)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub top language](https://img.shields.io/github/languages/top/asheuh/Maintenance-Tracker-App.svg)
 ![Code Climate](https://img.shields.io/codeclimate/coverage/asheuh/Maintenance-Tracker-App.svg)
