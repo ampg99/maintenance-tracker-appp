@@ -1,16 +1,13 @@
 # Maintenance-Tracker-App
 
-[![Build Status](https://travis-ci.org/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Dependency Status](http://img.shields.io/gemnasium/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Coverage Status](http://img.shields.io/coveralls/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Code Climate](http://img.shields.io/codeclimate/github/doge/wow.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Gem Version](http://img.shields.io/gem/v/suchgem.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
-[![Badges](http://img.shields.io/:badges-7/7-ff6799.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
+[![Build Status](https://travis-ci.org/asheuh/Maintenance-Tracker-App.svg)](https://travis-ci.org/asheuh/Maintenance-Tracker-App)
+[![Dependency Status](http://img.shields.io/gemnasium/asheuh/Maintenance-Tracker-App.svg)](https://gemnasium.com/asheuh/Maintenance-Tracker-App)
+[![Coverage Status](http://img.shields.io/coveralls/asheuh/Maintenance-Tracker-App.svg)](https://coveralls.io/r/asheuh/Maintenance-Tracker-App)
+[![Code Climate](http://img.shields.io/codeclimate/github/asheuh/Maintenance-Tracker-App.svg)](https://codeclimate.com/github/asheuh/Maintenance-Tracker-App)
+[![Gem Version](http://img.shields.io/gem/v/suchgem.svg)](https://rubygems.org/gems/suchgem)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+[![Badges](http://img.shields.io/:badges-7/7-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
-
-
-[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![Dependency Status](http://img.shields.io/gemnasium/badges/badgerbadgerbadger.svg?style=flat-square)](https://gemnasium.com/badges/badgerbadgerbadger) [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger) [![Code Climate](http://img.shields.io/codeclimate/github/badges/badgerbadgerbadger.svg?style=flat-square)](https://codeclimate.com/github/badges/badgerbadgerbadger) [![Github Issues](http://githubbadges.herokuapp.com/badges/badgerbadgerbadger/issues.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger/issues) [![Pending Pull-Requests](http://githubbadges.herokuapp.com/badges/badgerbadgerbadger/pulls.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger/pulls) [![Gem Version](http://img.shields.io/gem/v/badgerbadgerbadger.svg?style=flat-square)](https://rubygems.org/gems/badgerbadgerbadger) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org) [![Badges](http://img.shields.io/:badges-9/9-ff6799.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger)
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
 
