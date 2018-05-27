@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<title>home</title>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/css/asheuh-framework.css">
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <script src="../../static/js/app.js "></script>
+
+</head>
+
+<body>
+    <div w3-include-html="menu.html"></div>
+    <script>
+        includeHTML();
+    </script>
+   <div class="content">
+        <div class="asheuh-container">
+            <div class="my-container details tab">
+                <h1>Users</h1>
+                <hr>
+                <table id="requests">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email address</th>
+                            <th>Date joined</th>
+                            <th>Phone number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#123</td>
+                            <td>asheuh</td>
+                            <td>mboyabryan49@gmail.com</td>
+                            <td>12/01/2018</td>
+                            <td>0712342468</td>
+                        </tr>
+                        <tr>
+                            <td>#867</td>
+                            <td>paulla</td>
+                            <td>paulla@gmail.com</td>
+                            <td>13/04/2018</td>
+                            <td>0754282662</td>
+                        </tr>
+                        <tr>
+                            <td>#846</td>
+                            <td>sella</td>
+                            <td>sella@gmail.com</td>
+                            <td>14/08/2018</td>
+                            <td>0765247282</td>
+                        </tr>
+                        <tr>
+                            <td>#264</td>
+                            <td>jack</td>
+                            <td>jack@gmail.com</td>
+                            <td>16/07/2018</td>
+                            <td>0708765767</td>
+                        </tr>
+                        <tr>
+                            <td>#296</td>
+                            <td>charles</td>
+                            <td>charles@gmail.com</td>
+                            <td>08/08/2018</td>
+                            <td>0728662822</td>
+                        </tr>
+                        <tr>
+                            <td>#475</td>
+                            <td>Helen</td>
+                            <td>helen@gmail.com</td>
+                            <td>23/09/2018</td>
+                            <td>0786452726</td>
+                        </tr>
+                        <tr>
+                            <td>#856</td>
+                            <td>avril</td>
+                            <td>avril@gmail.com</td>
+                            <td>22/22/2018</td>
+                            <td>0736352829</td>
+                        </tr>
+                        <tr>
+                            <td>#963</td>
+                            <td>diana</td>
+                            <td>diana@gmail.com</td>
+                            <td>13/23/2018</td>
+                            <td>0736392739</td>
+                        </tr>
+                        <tr>
+                            <td>#083</td>
+                            <td>ronny</td>
+                            <td>ronny@gmail.com</td>
+                            <td>12/02/2018</td>
+                            <td>0754826382</td>
+                        </tr>
+                        <tr>
+                            <td>#812</td>
+                            <td>jenny</td>
+                            <td>jenny@gmail.com</td>
+                            <td>12/02/2018</td>
+                            <td>0718739472</td>
+                        </tr>
+                        <tr>
+                            <td>#164</td>
+                            <td>steve</td>
+                            <td>steve@gmail.com</td>
+                            <td>03/02/2018</td>
+                            <td>0725362826</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="id01" class="modal">
+
+                <form class="modal-content animate" action="/action_page.php">
+                    <div class="scontainer">
+                        <label style="float:left;" for="uname"><b>Your name</b></label>
+                        <input type="text" placeholder="Enter Username" name="uname" required>
+                        <label style="float:left" for="psw"><b>Request type</b></label>
+                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <label style="float:left" for="psw"><b>Describe the problem</b></label>
+                        <textarea id="subject" name="subject" placeholder="Description..." style="height:200px"></textarea>
+                        <a href="#" class="btn btn-success" type="submit">Submit</a>
+                    </div>
+
+                    <div class="container" style="background-color:#f1f1f1">
+                        <a class="btn btn-danger" href="#" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p style="font-size: 12px;">&copy; Copyright 2018 SME, Inc. All Rights Reserved. <a class="default-link" href="#">Terms and Privacy</a></p>
+    </div>
+</body>
+
+</html>
