@@ -35,7 +35,7 @@ so you can keep track of  your requests
 
 ![createrequestpage](https://user-images.githubusercontent.com/22955146/40580598-300ac1be-614a-11e8-820b-c60cc5290a53.png)
 
-### Contributing [![contributions welcome](https://img.shields.io/asheuh/Maintenance-Tracker-App.svg?style=flat)](https://github.com/asheuh/Maintenance-Tracker-App/issues)
+### Contributing 
 
 If you want to _encourage_ people to contribute to this project, by reminding them that you _welcome_ their input go to the app and use it
 
