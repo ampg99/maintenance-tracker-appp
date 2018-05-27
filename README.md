@@ -5,7 +5,7 @@
 [![Coverage Status](http://img.shields.io/coveralls/asheuh/Maintenance-Tracker-App.svg?style=flat-square)](https://coveralls.io/r/asheuh/Maintenance-Tracker-App) [![Code Climate](http://img.shields.io/codeclimate/github/asheuh/Maintenance-Tracker-App.svg?style=flat-square)](https://codeclimate.com/github/asheuh/Maintenance-Tracker-App)
 [![Coverage Status](http://img.shields.io/coveralls/asheuh/Maintenance-Tracker-App.svg)](https://coveralls.io/r/asheuh/Maintenance-Tracker-App)
 ![GitHub last commit](https://img.shields.io/github/last-commit/asheuh/Maintenance-Tracker-App/develop.svg)
-[![Gem Version](http://img.shields.io/gem/v/suchgem.svg)](https://rubygems.org/gems/suchgem)
+[![Gem Version](http://img.shields.io/gem/v/Maintenance-Tracker-App.svg)](https://rubygems.org/gems/Maintenance-Tracker-App)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![Badges](http://img.shields.io/:badges-7/7-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
