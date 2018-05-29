@@ -600,7 +600,7 @@ textarea {
     resize: vertical;
 }
 
-input[type=email],
+input[type=text],
 select,
 textarea {
     width: 100%;
