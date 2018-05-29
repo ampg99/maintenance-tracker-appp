@@ -1,19 +1,11 @@
 # Maintenance-Tracker-App
 
 
-![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/asheuh/Maintenance-Tracker-App.svg)
-![GitHub top language](https://img.shields.io/github/languages/top/asheuh/Maintenance-Tracker-App.svg)
 ![Code Climate](https://img.shields.io/codeclimate/coverage/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/asheuh/Maintenance-Tracker-App/develop.svg)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
-[![Badges](http://img.shields.io/:badges-7/7-ff6799.svg)](https://github.com/asheuh/Maintenance-Tracker-App)
 ![bitHound](https://img.shields.io/bithound/code/github/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/asheuh/Maintenance-Tracker-App.svg)
-![GitHub issue comments](https://img.shields.io/github/issues/detail/comments/badges/shields/979.svg)
-![GitHub contributors](https://img.shields.io/github/contributors/asheuh/Maintenance-Tracker-App.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/asheuh/Maintenance-Tracker-App.svg)
-![GitHub repo size in bytes](https://img.shields.io/github/repo-size/asheuh/Maintenance-Tracker-App.svg)
-
 #### Project Overview
 
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
