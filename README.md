@@ -4,7 +4,6 @@
 ![Code Climate](https://img.shields.io/codeclimate/coverage/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/asheuh/Maintenance-Tracker-App/develop.svg)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
-![bitHound](https://img.shields.io/bithound/code/github/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/asheuh/Maintenance-Tracker-App.svg)
 #### Project Overview
 
