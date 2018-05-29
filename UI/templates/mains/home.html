@@ -27,10 +27,9 @@
                     <li><a href="approved.html">Approved</a></li>
                     <li><a href="rejected.html">Rejected</a></li>
                     <li><a href="resolved.html">Resolved</a></li>
-                    <li><a href="create.html">Create request</a></li>
+                    <li><a onclick="document.getElementById('id01').style.display='block'" href="#">Create request</a></li>
                 </ul>
             </div>
-            <li><a href="users.html" class="side-link link"><i class="ha wa fas fa-users"></i> Users</a></li>
             <li><a href="contact.html" class="side-link link"><i class="ha wa fas fa-comment"></i> Contact us</a></li>
             <li><a href="profile.html" class="side-link link"><i class="ha wa fas fa-user-circle"></i> My account</a></li>
         </ul>
@@ -51,7 +50,7 @@
                     <a href="home.html">MTracker<sup><small >2018</small></sup></a>
                 </li>
                 <li class="right"><a href="../mains/login.html"><i class="ha fas fa-sign-out-alt"></i> Logout</a></li>
-                <li class="right"><a href="#"><i class="ha fas fa-user"></i> Username</a></li>
+                <li class="right"><a href="profile.html"><i class="ha fas fa-user"></i> Username</a></li>
             </ul>
         </div>
     </nav>
@@ -65,7 +64,7 @@
                         <div class="count">20</div>
                         <div class="style-row" style="text-align:center;">
                             <div class="grid-3">
-                                <a class="col-4" href="request_list.html">Preview</a>
+                                <a class="col-4" href="myrequests.html">Preview</a>
                                 <a class="col-4" href="# ">Bookmark</a>
                             </div>
                         </div>
@@ -83,7 +82,7 @@
                         <div class="count">5</div>
                         <div class="style-row" style="text-align:center;">
                             <div class="grid-3">
-                                <a class="col-4" href="request_list.html">Preview</a>
+                                <a class="col-4" href="myrequests.html">Preview</a>
                                 <a class="col-4" href="# ">Bookmark</a>
                             </div>
                         </div>
@@ -101,7 +100,7 @@
                         <div class="count">1</div>
                         <div class="style-row" style="text-align:center;">
                             <div class="grid-3">
-                                <a class="col-4" href="request_list.html">Preview</a>
+                                <a class="col-4" href="myrequests.html">Preview</a>
                                 <a class="col-4" href="# ">Bookmark</a>
                             </div>
                         </div>
@@ -119,7 +118,7 @@
                         <div class="count">3</div>
                         <div class="style-row" style="text-align:center;">
                             <div class="grid-3">
-                                <a class="col-4" href="request_list.html">Preview</a>
+                                <a class="col-4" href="myrequests.html">Preview</a>
                                 <a class="col-4" href="# ">Bookmark</a>
                             </div>
                         </div>
@@ -154,11 +153,31 @@
                         </div>
                         <div class="col-6">
                             <div class="create">
-                                <a href="#">
+                                <a onclick="document.getElementById('id01').style.display='block'" style="width:auto;" href="#">
                                     <div class="row create-as">
                                         <p class="mom col-2"><i class="fas fa-plus-square"></i> Create request</p>
                                     </div>
                                 </a>
+                                <div id="id01" class="modal">
+
+                                    <form class="modal-content animate" action="/action_page.php">
+                                        <div class="scontainer">
+                                            <label style="float:left;" for="uname"><b>Your name</b></label>
+                                            <input type="text" placeholder="Enter Username" name="uname" required>
+
+                                            <label style="float:left" for="psw"><b>Request type</b></label>
+                                            <input type="password" placeholder="Enter Password" name="psw" required>
+
+                                            <label style="float:left" for="psw"><b>Describe the problem</b></label>
+                                            <textarea id="subject" name="subject" placeholder="Description..." style="height:200px"></textarea>
+                                            <a href="#" class="btn btn-success" type="submit">Submit</a>
+                                        </div>
+
+                                        <div class="container" style="background-color:#f1f1f1">
+                                            <a class="btn btn-danger" href="#" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

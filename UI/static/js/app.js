@@ -1,4 +1,5 @@
 var dropdown = document.getElementsByClassName("dropdown-btn");
+var modal = document.getElementById('id01');
 var i;
 
 for (i = 0; i < dropdown.length; i++) {
@@ -11,4 +12,10 @@ for (i = 0; i < dropdown.length; i++) {
             dropdownContent.style.display = "block";
         }
     });
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
