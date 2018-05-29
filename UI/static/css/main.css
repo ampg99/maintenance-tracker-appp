@@ -466,22 +466,49 @@ ul.myNav li.right {
     border-top: 0.2px solid #808080ee;
 }
 
-.footer p {
+.my-footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    float: right;
+    color: #343434;
+    text-align: center;
+    border-top: 0.2px solid #808080ee;
+}
+
+.my-footer p {
     margin-top: 1em;
 }
 
-.footer p a {
+.my-footer p a {
     color: blue;
     text-decoration: none;
     margin: 0 5px
 }
 
-.footer p a:hover {
+.my-footer p a:hover {
+    text-decoration: underline
+}
+.my-footer p {
+    margin-top: 1em;
+}
+
+.my-footer p a {
+    color: blue;
+    text-decoration: none;
+    margin: 0 5px
+}
+
+.my-footer p a:hover {
     text-decoration: underline
 }
 
 @media all and (max-width: 1093px) {
     .footer {
+        display:none;
+    }
+    .my-footer {
         display:none;
     }
 }
