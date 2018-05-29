@@ -12,14 +12,7 @@ USERS = [
         'username': 'brian',
         'email': 'brian@gmail.com',
         'password': '123456789'
-    },
-    {
-        'id': 2,
-        'username': 'paulla',
-        'email': 'paulla@gmail.com',
-        'password': '123456789'
-    }
-]
+    }]
 class User(unittest.TestCase):
     """
     This i a class for the test case of user
