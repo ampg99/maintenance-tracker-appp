@@ -1,25 +1,11 @@
 import unittest
+import json
+from run import create_app
+from resources.users import users, requests, UserResource
+
 """
 Importing unittest moduke
 """
-import json
-from run import create_app
-from resources.users import UserResource
-
-USERS = [
-    {
-        'id': 1,
-        'username': 'brian',
-        'email': 'brian@gmail.com',
-        'password': '123456789'
-    },
-    {
-        'id': 2,
-        'username': 'paulla',
-        'email': 'paulla@gmail.com',
-        'password': '123456789'
-    }
-]
 
 class UserTestCase(unittest.TestCase):
     """
@@ -31,18 +17,7 @@ class UserTestCase(unittest.TestCase):
         """
         self.app = create_app(filename="config")
         self.client = self.app.test_client
-        self.request = []
-        self.user = [user for user in USERS]
-        for self.i in range(len(self.user)):
-            return self.i
-        for self.r in range(len(self.request)):
-            return self.r
-
-        self.new_user = {
-            'username': 'sella',
-            'email': 'sella@gmail.com',
-            'password': '45464748'
-        }
+        self.user = UserResource()
 
     def login(self, *args, **kwargs):
         """
@@ -60,7 +35,11 @@ class UserTestCase(unittest.TestCase):
         """
         The method creates a user through an api
         """
-        response = self.client().post('/api/v1/users/', data=self.new_user)
+        response = self.client().post('/api/v1/users/', data=dict(
+            Id='1',
+            email='paulla@gmail.com',
+            password='123456789'
+        ))
         self.assertEqual(response.status_code, 201)
 
 
@@ -82,7 +61,7 @@ class UserTestCase(unittest.TestCase):
             'password': 'avril'
         }
         # posts the data
-        response = self.client().post('/api/v1/users/', data)
+        response = self.client().post('/api/v1/users/', data=data)
         self.assertEqual(response.status_code, 201)
         # data to be updated
         response = self.client().put('/api/v1/user/1', data = {
@@ -96,7 +75,7 @@ class UserTestCase(unittest.TestCase):
         """
         This method tells the api to get a single user
         """
-        response = self.client().get('/api/v1/users/<int:id>/', self.user[self.i]['id'])
+        response = self.client().get('/api/v1/users/<int:id>/', self.user['id'])
         self.assertEqual(response.status_code, 200)
 
     def test_delete_user(self):
@@ -117,7 +96,7 @@ class UserTestCase(unittest.TestCase):
             description="poor Internet connection on vpn",
             posted_date='1/21/2018'
         ), follow_redirects=True)
-        self.request.append(response)
+        requests.append(response)
         self.assertEqual(response.status_code, 201)
 
     def test_user_get_requests(self):
@@ -125,7 +104,7 @@ class UserTestCase(unittest.TestCase):
         The user can get and view all the requests with (GET request)
         """
         self.login(self, 'asheuh@gmail.com', '2827374938')
-        response = self.client().get('/api/v1/users/1/requests/', self.request)
+        response = self.client().get('/api/v1/users/1/requests/', requests)
         self.assertEqual(response.status_code, 200)
 
     def test_user_get_request_by_id(self):
@@ -133,7 +112,7 @@ class UserTestCase(unittest.TestCase):
         The user can get a single request and view it (with GET request)
         """
         self.login(self, 'paulla@gmail.com', '12345678')
-        response = self.client().get('/api/v1/users/1/requests/1/', self.request[self.r]['Id'])
+        response = self.client().get('/api/v1/users/1/requests/1/', requests[self.r]['Id'])
         self.assertEqual(response.status_code, 200)
 
     def test_user_update_request(self):

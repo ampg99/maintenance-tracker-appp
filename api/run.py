@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from resources.users import UserResource
+from app import Testing
 
 def create_app(filename):
     """
@@ -10,7 +11,8 @@ def create_app(filename):
     app.config.from_object(filename)
     api = Api(app)
 
-    api.add_resource(UserResource, '/user', '/user/', '/todo/<string:id>', '/todo/<string:id>/')
+    api.add_resource(Testing, '/')
+    api.add_resource(UserResource, '/api/v1', '/api/v1/', '/api/v1/<string:id>', '/api/v1/<string:id>/')
 
     return app
 
