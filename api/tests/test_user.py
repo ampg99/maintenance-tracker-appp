@@ -77,7 +77,7 @@ class UserTestCase(unittest.TestCase):
         response = self.client.delete('/api/v1/user/1')
         self.assertEqual(response.status_code, 200)
 
-    def test_user_create_request(self):
+    def test_create_request(self):
         """
         The user can create a request
         """
@@ -90,7 +90,7 @@ class UserTestCase(unittest.TestCase):
         ), follow_redirects=True)
         self.assertEqual(response.status_code, 201)
 
-    def test_get_request(self):
+    def test_get_requests(self):
         """
         The user can get and view all the requests with (GET request)
         """
