@@ -163,8 +163,10 @@ class UserTestCase(unittest.TestCase):
         """
         response = self.login(self, 'paulla@gmail.com', '12345678')
         self.assertIn('The page title', response.data)
+        # Tests for Invalid user email input
         response = self.login(self, 'paulla@gmail.com' + 't', '12345678')
         self.assertIn('Invalid email address', response.data)
+        # Test for invalid user password input
         response = self.login(self, 'paulla@gmail.com', '12345678' + 't')
         self.assertIn('Invalid password given', response.data)
 
