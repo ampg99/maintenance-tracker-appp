@@ -52,7 +52,7 @@ class UserTestCase(unittest.TestCase):
 
     def logout(self, *args):
         """
-        This method logs out the user
+        This method logs out the user and redirects them to a page
         """
         return self.client().get('/api/v1/logout', follow_redirects=True)
 
@@ -172,6 +172,7 @@ class UserTestCase(unittest.TestCase):
 
         """
         The method test user log out and tells the user if they are logged out
+        and then redirects them to a page
         """
         response = self.logout(self)
         self.assertIn('You are now logged out', response.data)
