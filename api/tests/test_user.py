@@ -110,12 +110,12 @@ class UserTestCase(unittest.TestCase):
         """
         The user can create a request
         """
-        self.login(self, 'paulla@gmail.com', '12345678')
-        response = self.client().post('/api/v1/users/<int:id>/requests/', data=dict(
+        self.login(self, 'asheuh@gmail.com', '2927374747')
+        response = self.client().post('/api/v1/users/1/requests/', data=dict(
             Id="1",
             request_name="Internet connection",
             description="poor Internet connection",
-            posted_date='12/21/2018'
+            posted_date='1/21/2018'
         ), follow_redirects=True)
         self.request.append(response)
         self.assertEqual(response.status_code, 201)
