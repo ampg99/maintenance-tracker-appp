@@ -106,7 +106,7 @@ class UserTestCase(unittest.TestCase):
         response = self.client().delete('/api/v1/user/1')
         self.assertEqual(response.status_code, 200)
 
-    def test_user_create_request(self):
+    def test_create_request(self):
         """
         The user can create a request
         """
@@ -120,7 +120,7 @@ class UserTestCase(unittest.TestCase):
         self.request.append(response)
         self.assertEqual(response.status_code, 201)
 
-    def test_user_get_requests(self):
+    def test_get_requests(self):
         """
         The user can get and view all the requests with (GET request)
         """
@@ -128,7 +128,7 @@ class UserTestCase(unittest.TestCase):
         response = self.client().get('/api/v1/users/1/requests/', self.request)
         self.assertEqual(response.status_code, 200)
 
-    def test_user_get_request_by_id(self):
+    def test_get_request_by_id(self):
         """
         The user can get a single request and view it (with GET request)
         """
@@ -136,7 +136,7 @@ class UserTestCase(unittest.TestCase):
         response = self.client().get('/api/v1/users/1/requests/1/', self.request[self.r]['Id'])
         self.assertEqual(response.status_code, 200)
 
-    def test_user_update_request(self):
+    def test_update_request(self):
         """
         The user can update a request with PUT request
         """
@@ -149,7 +149,7 @@ class UserTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    def test_user_delete_request(self):
+    def test_delete_request(self):
         """
         The user can delete a request
         """
