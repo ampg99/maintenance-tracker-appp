@@ -124,7 +124,7 @@ class UserTestCase(unittest.TestCase):
         """
         The user can get and view all the requests with (GET request)
         """
-        self.login(self, 'paulla@gmail.com', '12345678')
+        self.login(self, 'asheuh@gmail.com', '2827374938')
         response = self.client().get('/api/v1/users/1/requests/', self.request)
         self.assertEqual(response.status_code, 200)
 
