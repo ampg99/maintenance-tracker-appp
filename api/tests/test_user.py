@@ -114,7 +114,7 @@ class UserTestCase(unittest.TestCase):
         response = self.client().post('/api/v1/users/1/requests/', data=dict(
             Id="1",
             request_name="Internet connection",
-            description="poor Internet connection",
+            description="poor Internet connection on vpn",
             posted_date='1/21/2018'
         ), follow_redirects=True)
         self.request.append(response)
