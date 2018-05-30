@@ -12,7 +12,7 @@ def create_app(filename):
     api = Api(app)
 
     api.add_resource(Testing, '/')
-    api.add_resource(UserResource, '/api/v1', '/api/v1/', '/api/v1/<string:id>', '/api/v1/<string:id>/')
+    api.add_resource(UserResource, '/api/v1/requests', '/api/v1/requests', '/api/v1/requests/<string:id>', '/api/v1/requests/<string:id>/')
 
     return app
 
