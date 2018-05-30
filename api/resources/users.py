@@ -1,95 +1,94 @@
-from flask import json, request, abort, make_response, url_for, Flask
-from flask_restful import Resource
+from flask import Flask, jsonify, abort, make_response
+from flask_restful import Api, Resource, reqparse, fields, marshal
+from flask_httpauth import HTTPBasicAuth
 
-requests = [
-    {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web',
-        'done': False
-    }
-]
+auth = HTTPBasicAuth()
 
-users = []
-class UserResource(Resource):
+
+@auth.get_password
+def get_password(username):
+    if username == 'asheuh':
+        return 'barryazah'
+    return None
+
+
+@auth.error_handler
+def unauthorized():
     """
-    The class creates a resource
+    This returns false for non logged in users with the message access denied
     """
+    return make_response(jsonify({'message': 'access denied'}), 403)
+
+requests = []
+
+class RequestsListResource(Resource):
+    decorators = [auth.login_required]
+
+    def __init__(self):
+        self.parse = reqparse.RequestParser()
+        self.parse.add_argument('requestname', type=str, required=True,
+                                   help='No input privided for the request name',
+                                   location='json')
+        self.parse.add_argument('description', type=str, default="No description",
+                                   location='json')
+        super(RequestsListResource, self).__init__()
+        self.request_fields = {
+            'title': fields.String,
+            'description': fields.String,
+            'done': fields.Boolean,
+            'uri': fields.Url('req')
+        }
+
     def get(self):
-        response = [user.json_dump() for user in users]
-        return {"status": "success", "data": users}, 200
+        return {'requests': [marshal(req, self.request_fields) for req in requests]}, 200
 
     def post(self):
-        user = dict(
-            id=4,
-            username='asheuh',
-            email='asheuh@gmail.com',
-            password='1234567'
-        )
-        user.save()
-        return {"status": "success", "data": user}, 201
+        args = self.parse.parse_args()
+        req = {
+            'id': requests[-1]['id'] + 1,
+            'requestname': args['title'],
+            'description': args['description']
+        }
+        requests.append(req)
+        return {'request1': marshal(req, self.request_fields)}, 201
 
-    def put(self, id):
-        users.first()
-        users['username'] = 'brian'
-        return{"status": "success", "data": users}, 200
 
-    def delete(self, id):
-        users['id'].delete()
-        return {"status": "deleted", "data": users}, 200
+class RequestResource(Resource):
+    decorators = [auth.login_required]
 
-class RequestsResource(Resource):
-    """
-    The class creates a resource
-    """
-    def get(self):
+    def __init__(self):
+        self.parse2 = reqparse.RequestParser()
+        self.parse2.add_argument('title', type=str, location='json')
+        self.parse2.add_argument('description', type=str, location='json')
+        self.request_fields = {
+            'title': fields.String,
+            'description': fields.String,
+            'done': fields.Boolean,
+            'uri': fields.Url('req')
+        }
 
-        """
-        Creates the get all requests
-        """
-        return {'requests': requests}
+        super(RequestResource, self).__init__()
 
     def get(self, id):
-        """
-        Creates the get a request (by id)
-        """
-        for req in requests:
-            return req
-        return {'request': req[0]}
-
-    def post(self):
-        myrequest = {
-            'id': requests[-1]['id'] + 1,
-            'title': request.json['title'],
-            'description': request.json.get('description', ""),
-            'done': False
-        }
-        requests.append(myrequest)
-        return {'request': requests}, 201
-
-    def put(self , id):
-        request = filter(lambda t: t['id'] == id, requests)
-        if len(request) == 0:
+        req = [req for req in requests if req['id'] == id]
+        if len(req) == 0:
             abort(404)
-        if not request.json:
-            abort(400)
-        if 'title' in request.json:
-            abort(400)
-        if 'description' in request.json:
-            abort(400)
-        if 'done' in request.json and type(request.json['done']) is not bool:
-            abort(400)
-        request[0]['title'] = request.json.get('title', request[0]['title'])
-        request[0]['description'] = request.json.get('description', request[0]['description'])
-        request[0]['done'] = request.json.get('done', request[0]['done'])
-        return {'request': request[0]}
+        return {'task': marshal(req[0], self.request_fields)}, 200
 
-    def delete(self,  id):
-        requests.remove(request[0])
-        return  {'requests': requests}
+    def put(self, id):
+        req = [req for req in self.request_fields if req['id'] == id]
+        if len(req) == 0:
+            abort(404)
+        req = req[0]
+        args = self.parse2.parse_args()
+        for k, v in args.items():
+            if v is not None:
+                req[k] = v
+        return {'task': marshal(req, self.request_fields)}, 200
+
+    def delete(self, id):
+        req = [req for req in requests if req['id'] == id]
+        if len(req) == 0:
+            abort(404)
+        requests.remove(req[0])
+        return {'result': True}
