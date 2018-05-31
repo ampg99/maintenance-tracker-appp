@@ -1,0 +1,8 @@
+{
+  "api/tests/test_user.py::User::test_create_user": true, 
+  "api/tests/test_user.py::User::test_delete_user": true, 
+  "api/tests/test_user.py::User::test_get_all_users": true, 
+  "api/tests/test_user.py::User::test_get_user_by_id": true, 
+  "api/tests/test_user.py::User::test_upadate_user": true, 
+  "api/tests/test_user.py::User::test_update_user": true
+}

@@ -1,6 +1,5 @@
 # Maintenance-Tracker-App
 
-
 ![Code Climate](https://img.shields.io/codeclimate/coverage/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/asheuh/Maintenance-Tracker-App/develop.svg)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
@@ -66,4 +65,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 * Inspiration
 * The power is w3school is really awesome. N
 * Don't let life craft you, craft it
-
