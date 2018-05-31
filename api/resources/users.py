@@ -36,10 +36,9 @@ class RequestsListResource(Resource):
                                    location='json')
         super(RequestsListResource, self).__init__()
         self.request_fields = {
-            'title': fields.String,
+            'requestname': fields.String,
             'description': fields.String,
-            'done': fields.Boolean,
-            'uri': fields.Url('req')
+            'uri': fields.Url('get_requests')
         }
 
     def get(self):
@@ -53,13 +52,21 @@ class RequestsListResource(Resource):
         Method creates a new request
         """
         args = self.parse.parse_args()
-        req = {
-            'id': requests[-1]['id'] + 1,
-            'requestname': args['title'],
-            'description': args['description']
-        }
-        requests.append(req)
-        return {'request1': marshal(req, self.request_fields)}, 201
+        if requests == []:
+            req = {
+                'id': 1,
+                'requestname': args['requestname'],
+                'description': args['description']
+            }
+            requests.append(req)
+        else:
+            req = {
+                'id': requests[-1]['id'] + 1,
+                'requestname': args['requestname'],
+                'description': args['description']
+            }
+            requests.append(req)
+        return {'new_request': marshal(req, self.request_fields)}, 201
 
 
 class RequestResource(Resource):
@@ -73,10 +80,9 @@ class RequestResource(Resource):
         self.parse2.add_argument('title', type=str, location='json')
         self.parse2.add_argument('description', type=str, location='json')
         self.request_fields = {
-            'title': fields.String,
+            'requestname': fields.String,
             'description': fields.String,
-            'done': fields.Boolean,
-            'uri': fields.Url('req')
+            'uri': fields.Url('get_one_request')
         }
 
         super(RequestResource, self).__init__()
