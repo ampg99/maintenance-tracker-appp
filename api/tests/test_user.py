@@ -1,5 +1,7 @@
 import unittest
 import json
+import pytest
+from flask import url_for
 from run import create_app
 from resources.users import RequestsListResource, RequestResource
 
@@ -7,7 +9,7 @@ from resources.users import RequestsListResource, RequestResource
 Importing unittest moduke
 """
 
-class UserTestCase(unittest.TestCase):
+class TestEndpoints:
     """
     This i a class for the test case of user
     """
@@ -15,8 +17,8 @@ class UserTestCase(unittest.TestCase):
         """
         The method does the initialization of variables for test case
         """
-        self.app = create_app(filename="config")
-        self.client = self.app.test_client()
+        app = create_app(filename="config")
+        client = app.test_client()
         self.user = {
             'id': 1,
             'username': 'asheuh',
@@ -24,121 +26,116 @@ class UserTestCase(unittest.TestCase):
             'password': '1223456778'
         }
 
-    def login(self, *args, **kwargs):
+    def login(self, client, *args, **kwargs):
         """
         This method logs in the user
         """
-        return self.client.post('/api/v1/login', data=dict(**kwargs), follow_redirects=True)
+        return client.post('/api/v1/login', data=dict(**kwargs), follow_redirects=True)
 
-    def logout(self, *args):
+    def logout(self, client, *args):
         """
         This method logs out the user and redirects them to a page
         """
-        return self.client.get('/api/v1/logout', follow_redirects=True)
+        return client.get('/api/v1/logout', follow_redirects=True)
 
-    def test_create_user(self):
+    def test_user_post(self, client):
         """
         The method creates a user through an api
         """
-        response = self.client.post('/api/v1/users/', data=self.user)
-        self.assertEqual(response.status_code, 201)
+        response = client.post(url_for('create_user'), data=self.user)
+        assert response.status_code == 201
 
-
-    def test_get_users(self):
+    def test_users_get(self, client):
         """
         The api test to see if it can get all users
         """
-        response = self.client.get('/api/v1/users/')
-        self.assertEqual(response.status_code, 200)
+        response = client.get(url_for('get_users'))
+        assert response.status_code == 200
 
-    def test_update_user(self):
+    def test_user_put(self, client):
         """
         Api can perform update using PUT request
         """
         # data to be updated
-        response = self.client.put('/api/v1/user/1', data = {
+        response = client.put(url_for('update_user'), data = {
             'username': 'mermaid',
             'email': 'paulla@gmail.com',
             'password': 'q0qq0q0q0qq0'
         })
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
-    def test_get_user_by_id(self):
+    def test_user_get(self, client):
         """
         This method tells the api to get a single user
         """
-        response = self.client.get('/api/v1/users/<int:id>/')
-        self.assertEqual(response.status_code, 200)
+        response = client.get(url_for('get_one_user'))
+        assert response.status_code == 200
+        assert response.json == self.user
 
-    def test_delete_user(self):
+    def test_user_delete(self, client):
         """
         The api can delete a user
         """
-        response = self.client.delete('/api/v1/user/1')
-        self.assertEqual(response.status_code, 200)
+        response = client.delete(url_for('delete_user'))
+        assert response.status_code == 200
 
-    def test_user_create_request(self):
+    def test_request_post(self, client):
         """
         The user can create a request
         """
-        self.login(self, 'asheuh@gmail.com', '2927374747')
-        response = self.client.post('/api/v1/requests/', data=dict(
-            Id="1",
+        response = client.post(url_for('create_request'), data=dict(
+            Id=1,
             request_name="Internet connection",
             description="poor Internet connection on vpn",
             posted_date='1/21/2018'
         ), follow_redirects=True)
-        self.assertEqual(response.status_code, 201)
+        assert response.status_code == 201
 
-    def test_get_request(self):
+    def test_request_get(self, client):
         """
         The user can get and view all the requests with (GET request)
         """
-        self.login(self, 'asheuh', '2827374938')
-        response = self.client.get('/api/v1/requests/')
-        self.assertEqual(response.status_code, 200)
+        response = client.get(url_for('get_requests'))
+        assert response.status_code == 200
 
-    def test_get_request_by_id(self):
+    def test_request_by_id_get(self, client):
         """
         The user can get a single request and view it (with GET request)
         """
-        self.login(self, 'paulla@gmail.com', '12345678')
-        response = self.client.get('/api/v1/requests/1/')
-        self.assertEqual(response.status_code, 200)
+        response = client.get(url_for('get_one_request', id=1))
+        assert response.status_code == 200
 
-    def test_update_request(self):
+    def test_request_put(self, client):
         """
         The user can update a request with PUT request
         """
-        self.login(self, 'paulla@gmail.com', '12345678')
-        response = self.client.put('/api/v1/requests/1/', data=dict(
+        response = client.put(url_for('update_request', id=1), data=dict(
             request_name="Malware",
             description="Hacked",
             posted_date='12/28/2018'
         ), follow_redirects=True)
 
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
-    def test_delete_request(self):
+    def test_request_delete(self, client):
         """
         The user can delete a request
         """
-        self.login(self, 'paulla@gmail.com', '12345678')
-        response = self.client.delete('/api/v1/requests/1')
-        self.assertEqual(response.status_code, 200)
+        response = client.delete(url_for('delete_request', id=1))
+        assert response.status_code == 200
 
-    def test_login(self):
+    def test_login(self, client):
         """
         The method test user log in with correct input
         """
         response = self.login(self, 'paulla@gmail.com', '12345678')
-        self.assertIn('The page title', response.data)
+        assert b'You are now logged in' in response.data
         # Tests for Invalid user email input
         response = self.login(self, 'paulla@gmail.com' + 't', '12345678')
-        self.assertIn('Invalid email address', response.data)
+        assert b'Invalid email address' in response.data
         # Test for invalid user password input
         response = self.login(self, 'paulla@gmail.com', '12345678' + 't')
-        self.assertIn('Invalid password given', response.data)
+        assert b'Invalid password given' in response.data
 
     def test_logout(self):
 
@@ -147,11 +144,12 @@ class UserTestCase(unittest.TestCase):
         and then redirects them to a page
         """
         response = self.logout(self)
-        self.assertIn('You are now logged out', response.data)
+        assert b'You are now logged out' in response.data
 
-    def tearDown(self):
-        super(UserTestCase, self).tearDown()
-        pass
 
-if __name__ == '__main__':
-    unittest.main()
+class TestApp:
+    
+    def test_ping(self, client):
+        res = client.get(url_for('ping'))
+        assert res.status_code == 200
+        assert res.json == {'ping': 'pong'}
