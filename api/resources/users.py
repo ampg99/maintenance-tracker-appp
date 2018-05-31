@@ -22,6 +22,9 @@ def unauthorized():
 requests = []
 
 class RequestsListResource(Resource):
+    """
+    The class creates two end points , get_all_requests and create request
+    """
     decorators = [auth.login_required]
 
     def __init__(self):
@@ -40,9 +43,15 @@ class RequestsListResource(Resource):
         }
 
     def get(self):
+        """
+        The method gets all the requests
+        """
         return {'requests': [marshal(req, self.request_fields) for req in requests]}, 200
 
     def post(self):
+        """ 
+        Method creates a new request
+        """
         args = self.parse.parse_args()
         req = {
             'id': requests[-1]['id'] + 1,
@@ -54,6 +63,9 @@ class RequestsListResource(Resource):
 
 
 class RequestResource(Resource):
+    """
+    The class creates threes endpoints, update request, delete request and get a single request
+    """
     decorators = [auth.login_required]
 
     def __init__(self):
@@ -73,7 +85,7 @@ class RequestResource(Resource):
         req = [req for req in requests if req['id'] == id]
         if len(req) == 0:
             abort(404)
-        return {'task': marshal(req[0], self.request_fields)}, 200
+        return {'req': marshal(req[0], self.request_fields)}, 200
 
     def put(self, id):
         req = [req for req in self.request_fields if req['id'] == id]
@@ -84,7 +96,7 @@ class RequestResource(Resource):
         for k, v in args.items():
             if v is not None:
                 req[k] = v
-        return {'task': marshal(req, self.request_fields)}, 200
+        return {'req': marshal(req, self.request_fields)}, 200
 
     def delete(self, id):
         req = [req for req in requests if req['id'] == id]

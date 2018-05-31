@@ -4,5 +4,17 @@
   "api/tests/test_user.py::User::test_get_all_users": true, 
   "api/tests/test_user.py::User::test_get_user_by_id": true, 
   "api/tests/test_user.py::User::test_upadate_user": true, 
-  "api/tests/test_user.py::User::test_update_user": true
+  "api/tests/test_user.py::User::test_update_user": true, 
+  "api/tests/test_user.py::UserTestCase::test_create_user": true, 
+  "api/tests/test_user.py::UserTestCase::test_delete_user": true, 
+  "api/tests/test_user.py::UserTestCase::test_get_user_by_id": true, 
+  "api/tests/test_user.py::UserTestCase::test_get_users": true, 
+  "api/tests/test_user.py::UserTestCase::test_login": true, 
+  "api/tests/test_user.py::UserTestCase::test_logout": true, 
+  "api/tests/test_user.py::UserTestCase::test_update_user": true, 
+  "api/tests/test_user.py::UserTestCase::test_user_create_request": true, 
+  "api/tests/test_user.py::UserTestCase::test_user_delete_request": true, 
+  "api/tests/test_user.py::UserTestCase::test_user_get_request_by_id": true, 
+  "api/tests/test_user.py::UserTestCase::test_user_get_requests": true, 
+  "api/tests/test_user.py::UserTestCase::test_user_update_request": true
 }
