@@ -79,7 +79,7 @@ class TestEndpoints:
         response = client.delete(url_for('delete_user'))
         assert response.status_code == 200
 
-    def test_request_post(self, client):
+    def test_create_request(self, client):
         """
         The user can create a request
         """
@@ -91,7 +91,8 @@ class TestEndpoints:
         ), follow_redirects=True)
         assert response.status_code == 201
 
-    def test_request_get(self, client):
+    def test_get_requests(self, client):
+
         """
         The user can get and view all the requests with (GET request)
         """

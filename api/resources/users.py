@@ -22,6 +22,9 @@ def unauthorized():
 requests = []
 
 class RequestsListResource(Resource):
+    """
+    The class creates two end points , get_all_requests and create request
+    """
     decorators = [auth.login_required]
 
     def __init__(self):
@@ -60,6 +63,9 @@ class RequestsListResource(Resource):
 
 
 class RequestResource(Resource):
+    """
+    The class creates threes endpoints, update request, delete request and get a single request
+    """
     decorators = [auth.login_required]
 
     def __init__(self):
