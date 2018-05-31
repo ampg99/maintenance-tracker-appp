@@ -13,11 +13,10 @@ Mako==1.0.7
 MarkupSafe==1.0
 marshmallow==2.14.0
 marshmallow-sqlalchemy==0.13.2
-pkg-resources==0.0.0
+pkg-resources
 psycopg2==2.7.3.2
 python-dateutil==2.7.2
 python-editor==1.0.3
-pylint
 pytz==2018.3
 six==1.11.0
 SQLAlchemy==1.2.6
