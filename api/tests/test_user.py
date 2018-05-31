@@ -5,6 +5,33 @@ from flask import url_for
 from run import create_app
 from resources.users import RequestsListResource, RequestResource
 
+from flask_httpauth import HTTPBasicAuth
+app = create_app(filename="config")
+client = app.test_client()
+auth = HTTPBasicAuth()
+
+def login(client, username, password):
+    """
+    This method logs in the user
+    """
+    return client.post('/api/v1/login', data=dict(
+        username=username,
+        password=password
+    ), follow_redirects=True)
+
+def logout(client):
+    """
+    This method logs out the user and redirects them to a page
+    """
+    return client.get('/api/v1/logout', follow_redirects=True)
+
+@auth.get_password
+def get_password(username):
+    if username == 'asheuh':
+        return 'barryazah'
+    return None
+
+
 """
 Importing unittest moduke
 """
@@ -17,26 +44,12 @@ class TestEndpoints:
         """
         The method does the initialization of variables for test case
         """
-        app = create_app(filename="config")
-        client = app.test_client()
         self.user = {
             'id': 1,
             'username': 'asheuh',
             'email': 'asheuh@gmail.com',
             'password': '1223456778'
         }
-
-    def login(self, client, *args, **kwargs):
-        """
-        This method logs in the user
-        """
-        return client.post('/api/v1/login', data=dict(**kwargs), follow_redirects=True)
-
-    def logout(self, client, *args):
-        """
-        This method logs out the user and redirects them to a page
-        """
-        return client.get('/api/v1/logout', follow_redirects=True)
 
     def test_user_post(self, client):
         """
@@ -79,6 +92,7 @@ class TestEndpoints:
         response = client.delete(url_for('delete_user'))
         assert response.status_code == 200
 
+    login(client, 'asheuh', 'barryazah')
     def test_create_request(self, client):
         """
         The user can create a request
@@ -91,6 +105,7 @@ class TestEndpoints:
         ), follow_redirects=True)
         assert response.status_code == 201
 
+    login(client, 'asheuh', 'barryazah')
     def test_get_requests(self, client):
 
         """
@@ -99,6 +114,7 @@ class TestEndpoints:
         response = client.get(url_for('get_requests'))
         assert response.status_code == 200
 
+    login(client, 'asheuh', 'barryazah')
     def test_request_by_id_get(self, client):
         """
         The user can get a single request and view it (with GET request)
@@ -106,6 +122,7 @@ class TestEndpoints:
         response = client.get(url_for('get_one_request', id=1))
         assert response.status_code == 200
 
+    login(client, 'asheuh', 'barryazah')
     def test_request_put(self, client):
         """
         The user can update a request with PUT request
@@ -118,9 +135,10 @@ class TestEndpoints:
 
         assert response.status_code == 200
 
+    login(client, 'asheuh', 'barryazah')
     def test_request_delete(self, client):
         """
-        The user can delete a request
+        The user an delete a request
         """
         response = client.delete(url_for('delete_request', id=1))
         assert response.status_code == 200
@@ -129,13 +147,13 @@ class TestEndpoints:
         """
         The method test user log in with correct input
         """
-        response = self.login(self, 'paulla@gmail.com', '12345678')
+        response = login(client, 'asheuh', 'barryazah')
         assert b'You are now logged in' in response.data
         # Tests for Invalid user email input
-        response = self.login(self, 'paulla@gmail.com' + 't', '12345678')
+        response = login(client, 'asheuh' + 't', 'barryazah')
         assert b'Invalid email address' in response.data
         # Test for invalid user password input
-        response = self.login(self, 'paulla@gmail.com', '12345678' + 't')
+        response = login(client, 'asheuh', 'barryazah' + 't')
         assert b'Invalid password given' in response.data
 
     def test_logout(self):
@@ -144,7 +162,7 @@ class TestEndpoints:
         The method test user log out and tells the user if they are logged out
         and then redirects them to a page
         """
-        response = self.logout(self)
+        response = logout(client)
         assert b'You are now logged out' in response.data
 
 
