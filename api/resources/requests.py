@@ -1,27 +1,10 @@
 from flask import Flask, jsonify, abort, make_response
 from flask_restful import Api, Resource, reqparse, fields, marshal
-from flask_httpauth import HTTPBasicAuth
-
-auth = HTTPBasicAuth()
-
-
-@auth.get_password
-def get_password(username):
-    if username == 'asheuh':
-        return 'barryazah'
-    return None
-
-
-@auth.error_handler
-def unauthorized():
-    """This returns false for non logged in users with the message access denied"""
-    return make_response(jsonify({'message': 'access denied'}), 403)
 
 requests = []
 
 class RequestsListResource(Resource):
     """ The class creates two end points , get_all_requests and create request """
-    decorators = [auth.login_required]
 
     def __init__(self):
         self.parse = reqparse.RequestParser()
@@ -34,7 +17,7 @@ class RequestsListResource(Resource):
         self.request_fields = {
             'requestname': fields.String,
             'description': fields.String,
-            'uri': fields.Url('get_requests')
+            'uri': fields.Url('get_one_request')
         }
 
     def get(self):
@@ -46,14 +29,14 @@ class RequestsListResource(Resource):
         args = self.parse.parse_args()
         if requests == []:
             request = {
-                'request_id': 1,
+                'id': 1,
                 'requestname': args['requestname'],
                 'description': args['description']
             }
             requests.append(request)
         else:
             request = {
-                'request_id': requests[-1]['request_id'] + 1,
+                'id': requests[-1]['id'] + 1,
                 'requestname': args['requestname'],
                 'description': args['description']
             }
@@ -63,11 +46,10 @@ class RequestsListResource(Resource):
 
 class RequestResource(Resource):
     """ The class creates threes endpoints, update request, delete request and get a single request """
-    decorators = [auth.login_required]
 
     def __init__(self):
         self.parse2 = reqparse.RequestParser()
-        self.parse2.add_argument('title', type=str, location='json')
+        self.parse2.add_argument('requestname', type=str, location='json')
         self.parse2.add_argument('description', type=str, location='json')
         self.request_fields = {
             'requestname': fields.String,
@@ -77,14 +59,14 @@ class RequestResource(Resource):
 
         super(RequestResource, self).__init__()
 
-    def get(self, request_id):
-        request = [request for request in requests if request['request_id'] == request_id]
+    def get(self, id):
+        request = [request for request in requests if request['id'] == id]
         if len(request) == 0:
             abort(404)
         return {'request': marshal(request[0], self.request_fields)}, 200
 
-    def put(self, request_id):
-        request = [request for request in self.request_fields if request['request_id'] == request_id]
+    def put(self, id):
+        request = [request for request in self.request_fields if request['id'] == id]
         if len(request) == 0:
             abort(404)
         request = request[0]
@@ -94,8 +76,8 @@ class RequestResource(Resource):
                 request[k] = v
         return {'request': marshal(request, self.request_fields)}, 200
 
-    def delete(self, request_id):
-        request = [request for request in requests if request['request_id'] == id]
+    def delete(self, id):
+        request = [request for request in requests if request['id'] == id]
         if len(request) == 0:
             abort(404)
         requests.remove(request[0])
