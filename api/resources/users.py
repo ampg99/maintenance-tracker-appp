@@ -1,11 +1,14 @@
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, make_response, request
 from flask_restful import Api, Resource, reqparse, fields, marshal
 
-users = []
+from flask_httpauth import HTTPBasicAuth
+from flask import Flask, render_template, flash, request, url_for, redirect, session
+from wtforms import Form, BooleanField, TextField, PasswordField, validators
+from passlib.hash import sha256_crypt
 
-class UsersListResource(Resource):
-    """ The class creates two end points , get_all_user and create user """
+USERS = []
 
+class UsersRegisterResource(Resource):
     def __init__(self):
         self.parse = reqparse.RequestParser()
         self.parse.add_argument('username', type=str, required=True,
@@ -13,44 +16,49 @@ class UsersListResource(Resource):
                                     location='json')
         self.parse.add_argument('email', type=str, default="",
                                     location='json')
-        super(UsersListResource, self).__init__()
+        super(UsersRegisterResource, self).__init__()
         self.user_fields = {
             'username': fields.String,
             'email': fields.String,
             'password': fields.String,
-            'uri': fields.Url('get_users')
+            'uri': fields.Url('get_one_user')
         }
 
     def get(self):
-        """
-        The method gets all the requests
-        """
-        return {'users': [marshal(user, self.user_fields) for user in users]}, 200
+        return {'users': [marshal(user, self.user_fields) for user in USERS]}, 200
 
     def post(self):
-        """Method creates a new user"""
+        user = self.user_fields
         args = self.parse.parse_args()
-        if users == []:
-            user = {
-                'user_id': 1,
-                'username': args['username'],
-                'email': args['email'],
-                'password': args['password']
-            }
-            users.append(user)
-        else:
-            user = {
-                'user_id': users[-1]['user_id'] + 1,
-                'username': args['username'],
-                'email': args['email'],
-                'password': args['password']
-            }
-            users.append(user)
-        return {'new_user': marshal(user, self.user_fields)}, 201
+        if request.method == "POST":
+            
+            if USERS == []:
+                user = {
+                    'user_id': 1,
+                    'username': args['username'],
+                    'email': args['email'],
+                    'password': sha256_crypt.encrypt((str(user['password'])))
+                }
+                USERS.append(user)
+
+            else:
+                for user in USERS:
+                    if user['username'] in user.values():
+                        return {'message': 'That username is already taken, please choose another'}
+                    else:
+                        user = {
+                            'user_id': USERS[-1]['user_id'] + 1,
+                            'username': user['username'],
+                            'email': user['email'],
+                            'password': sha256_crypt.encrypt((str(user['password'])))
+                        }
+                        USERS.append(user)
+                        return redirect(url_for('get_one_user'))
+            return {'new_user': marshal(user, self.user_fields)}, 201
 
 
 class UserResource(Resource):
-    """The class creates threes endpoints, update user, delete user and get a single user"""
+    """"The class creates threes endpoints, update user, delete user and get a single user"""
 
     def __init__(self):
         self.parse2 = reqparse.RequestParser()
@@ -67,7 +75,7 @@ class UserResource(Resource):
         super(UserResource, self).__init__()
 
     def get(self, user_id):
-        user = [user for user in users if user['user_id'] == user_id]
+        user = [user for user in USERS if user['user_id'] == user_id]
         if len(user) == 0:
             abort(404)
         return {'user': marshal(user[0], self.user_fields)}, 200
@@ -86,8 +94,8 @@ class UserResource(Resource):
 
     def delete(self, user_id):
         """ deletes a user """
-        user = [user for user in users if user['user_id'] == user_id]
+        user = [user for user in USERS if user['user_id'] == user_id]
         if len(user) == 0:
             abort(404)
-        users.remove(user[0])
+        USERS.remove(user[0])
         return {'result': True}
