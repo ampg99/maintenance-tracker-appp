@@ -28,7 +28,7 @@ class UsersRegisterResource(Resource):
         user = self.user_fields
         args = self.parse.parse_args()
         if request.method == "POST":
-            
+
             if USERS == []:
                 user = {
                     'user_id': 1,
