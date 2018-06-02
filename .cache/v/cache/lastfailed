@@ -1,8 +1,6 @@
 {
   "api/tests/test_user.py::TestApp::()": true, 
-  "api/tests/test_user.py::TestEndpoints::()": true, 
   "api/tests/test_user.py::TestEndpoints::()::test_create_request": true, 
-  "api/tests/test_user.py::TestEndpoints::()::test_get_requests": true, 
   "api/tests/test_user.py::TestEndpoints::()::test_login": true, 
   "api/tests/test_user.py::TestEndpoints::()::test_logout": true, 
   "api/tests/test_user.py::TestEndpoints::()::test_request_by_id_get": true, 
@@ -12,7 +10,6 @@
   "api/tests/test_user.py::TestEndpoints::()::test_user_get": true, 
   "api/tests/test_user.py::TestEndpoints::()::test_user_post": true, 
   "api/tests/test_user.py::TestEndpoints::()::test_user_put": true, 
-  "api/tests/test_user.py::TestEndpoints::()::test_users_get": true, 
   "api/tests/test_user.py::User::test_create_user": true, 
   "api/tests/test_user.py::User::test_delete_user": true, 
   "api/tests/test_user.py::User::test_get_all_users": true, 

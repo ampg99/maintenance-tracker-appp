@@ -4,7 +4,7 @@ from flask import Flask, render_template, flash, request, url_for, redirect, ses
 from passlib.hash import sha256_crypt
 
 USERS = []
-
+    
 class UsersRegisterResource(Resource):
     def __init__(self):
         self.parse = reqparse.RequestParser()

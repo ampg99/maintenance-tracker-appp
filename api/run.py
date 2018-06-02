@@ -24,11 +24,11 @@ def create_app(filename):
     api.add_resource(UserResource, '/api/v1/users/<int:user_id>', endpoint='delete_user')
     api.add_resource(UserResource, '/api/v1/users/<int:user_id>', endpoint='update_user')
     api.add_resource(UserResource, '/api/v1/users', endpoint='create_user')
-    api.add_resource(RequestsListResource, '/api/v1/requests', '/api/v1/requests/', endpoint='get_requests')
-    api.add_resource(RequestResource, '/api/v1/requests/<int:id>', endpoint='get_one_request')
-    api.add_resource(RequestResource, '/api/v1/requests/<int:id>', endpoint='update_request')
-    api.add_resource(RequestResource, '/api/v1/requests/<int:id>', endpoint='delete_request')
-    api.add_resource(RequestResource, '/api/v1/requests', endpoint='create_request')
+    api.add_resource(RequestsListResource, '/api/v1/users/<int:user_id>/requests', '/api/v1/requests/', endpoint='get_requests')
+    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests/<int:id>', endpoint='get_one_request')
+    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests/<int:id>', endpoint='update_request')
+    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests/<int:id>', endpoint='delete_request')
+    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests', endpoint='create_request')
 
 
     return app
