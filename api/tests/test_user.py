@@ -2,7 +2,7 @@ import unittest
 import json
 import pytest
 from flask import url_for
-from run import create_app
+from api import create_app
 
 app = create_app('config')
 
