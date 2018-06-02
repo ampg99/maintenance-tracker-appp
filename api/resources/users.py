@@ -4,7 +4,7 @@ from flask import Flask, render_template, flash, request, url_for, redirect, ses
 from passlib.hash import sha256_crypt
 
 USERS = []
-    
+
 class UsersRegisterResource(Resource):
     def __init__(self):
         self.parse = reqparse.RequestParser()
@@ -28,7 +28,7 @@ class UsersRegisterResource(Resource):
         user = self.user_fields
         args = self.parse.parse_args()
         if request.method == "POST":
-            
+
             if USERS == []:
                 user = {
                     'user_id': 1,
@@ -45,8 +45,8 @@ class UsersRegisterResource(Resource):
                     else:
                         user = {
                             'user_id': USERS[-1]['user_id'] + 1,
-                            'username': user['username'],
-                            'email': user['email'],
+                            'username': args['username'],
+                            'email': args['email'],
                             'password': sha256_crypt.encrypt((str(user['password'])))
                         }
                         USERS.append(user)
