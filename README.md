@@ -1,5 +1,6 @@
 # Maintenance-Tracker-App
 
+![Travis](https://img.shields.io/travis/asheuh/Maintenance-Tracker-App.svg)
 ![Code Climate](https://img.shields.io/codeclimate/coverage/asheuh/Maintenance-Tracker-App.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/asheuh/Maintenance-Tracker-App/develop.svg)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)

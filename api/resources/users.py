@@ -1,199 +1,101 @@
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, make_response, request
 from flask_restful import Api, Resource, reqparse, fields, marshal
+
 from flask_httpauth import HTTPBasicAuth
+from flask import Flask, render_template, flash, request, url_for, redirect, session
+from wtforms import Form, BooleanField, TextField, PasswordField, validators
+from passlib.hash import sha256_crypt
 
-auth = HTTPBasicAuth()
+USERS = []
 
-
-@auth.get_password
-def get_password(username):
-    if username == 'asheuh':
-        return 'barryazah'
-    return None
-
-
-@auth.error_handler
-def unauthorized():
-    """
-    This returns false for non logged in users with the message access denied
-    """
-    return make_response(jsonify({'message': 'access denied'}), 403)
-
-requests = []
-users = []
-
-class RequestsListResource(Resource):
-    """ The class creates two end points , get_all_requests and create request """
-    decorators = [auth.login_required]
-
-    def __init__(self):
-        self.parse = reqparse.RequestParser()
-        self.parse.add_argument('requestname', type=str, required=True,
-                                   help='No input privided for the request name',
-                                   location='json')
-        self.parse.add_argument('description', type=str, default="No description",
-                                   location='json')
-        super(RequestsListResource, self).__init__()
-        self.request_fields = {
-            'requestname': fields.String,
-            'description': fields.String,
-            'uri': fields.Url('get_requests')
-        }
-
-    def get(self):
-        """
-        The method gets all the requests
-        """
-        return {'requests': [marshal(req, self.request_fields) for req in requests]}, 200
-
-    def post(self):
-        """ 
-        Method creates a new request
-        """
-        args = self.parse.parse_args()
-        if requests == []:
-            req = {
-                'id': 1,
-                'requestname': args['requestname'],
-                'description': args['description']
-            }
-            requests.append(req)
-        else:
-            req = {
-                'id': requests[-1]['id'] + 1,
-                'requestname': args['requestname'],
-                'description': args['description']
-            }
-            requests.append(req)
-        return {'new_request': marshal(req, self.request_fields)}, 201
-
-
-class RequestResource(Resource):
-    """ The class creates threes endpoints, update request, delete request and get a single request """
-    decorators = [auth.login_required]
-
-    def __init__(self):
-        self.parse2 = reqparse.RequestParser()
-        self.parse2.add_argument('title', type=str, location='json')
-        self.parse2.add_argument('description', type=str, location='json')
-        self.request_fields = {
-            'requestname': fields.String,
-            'description': fields.String,
-            'uri': fields.Url('get_one_request')
-        }
-
-        super(RequestResource, self).__init__()
-
-    def get(self, id):
-        req = [req for req in requests if req['id'] == id]
-        if len(req) == 0:
-            abort(404)
-        return {'req': marshal(req[0], self.request_fields)}, 200
-
-    def put(self, id):
-        req = [req for req in self.request_fields if req['id'] == id]
-        if len(req) == 0:
-            abort(404)
-        req = req[0]
-        args = self.parse2.parse_args()
-        for k, v in args.items():
-            if v is not None:
-                req[k] = v
-        return {'req': marshal(req, self.request_fields)}, 200
-
-    def delete(self, id):
-        req = [req for req in requests if req['id'] == id]
-        if len(req) == 0:
-            abort(404)
-        requests.remove(req[0])
-        return {'result': True}
-
-
-class UsersListResource(Resource):
-    """ The class creates two end points , get_all_requests and create request """
-    
+class UsersRegisterResource(Resource):
     def __init__(self):
         self.parse = reqparse.RequestParser()
         self.parse.add_argument('username', type=str, required=True,
-                                   help='No input privided for the username',
-                                   location='json')
+                                    help='No input privided for the username',
+                                    location='json')
         self.parse.add_argument('email', type=str, default="",
-                                   location='json')
-        super(UsersListResource, self).__init__()
+                                    location='json')
+        super(UsersRegisterResource, self).__init__()
         self.user_fields = {
             'username': fields.String,
             'email': fields.String,
             'password': fields.String,
-            'uri': fields.Url('get_users')
+            'uri': fields.Url('get_one_user')
         }
 
     def get(self):
-        """
-        The method gets all the requests
-        """
-        return {'requests': [marshal(user, self.user_fields) for user in users]}, 200
+        return {'users': [marshal(user, self.user_fields) for user in USERS]}, 200
 
     def post(self):
-        """ Method creates a new request """
+        user = self.user_fields
         args = self.parse.parse_args()
-        if users == []:
-            user = {
-                'id': 1,
-                'username': args['username'],
-                'email': args['email'],
-                'password': args['password']
-            }
-            users.append(user)
-        else:
-            user = {
-                'id': requests[-1]['id'] + 1,
-                'username': args['username'],
-                'email': args['email'],
-                'password': args['password']
-            }
-            requests.append(user)
-        return {'new_user': marshal(user, self.user_fields)}, 201
+        if request.method == "POST":
+            
+            if USERS == []:
+                user = {
+                    'user_id': 1,
+                    'username': args['username'],
+                    'email': args['email'],
+                    'password': sha256_crypt.encrypt((str(user['password'])))
+                }
+                USERS.append(user)
+
+            else:
+                for user in USERS:
+                    if user['username'] in user.values():
+                        return {'message': 'That username is already taken, please choose another'}
+                    else:
+                        user = {
+                            'user_id': USERS[-1]['user_id'] + 1,
+                            'username': user['username'],
+                            'email': user['email'],
+                            'password': sha256_crypt.encrypt((str(user['password'])))
+                        }
+                        USERS.append(user)
+                        return redirect(url_for('get_one_user'))
+            return {'new_user': marshal(user, self.user_fields)}, 201
 
 
 class UserResource(Resource):
-    """
-    The class creates threes endpoints, update request, delete request and get a single request
-    """
+    """"The class creates threes endpoints, update user, delete user and get a single user"""
 
     def __init__(self):
         self.parse2 = reqparse.RequestParser()
         self.parse2.add_argument('username', type=str, location='json')
         self.parse2.add_argument('email', type=str, location='json')
         self.parse2.add_argument('password', type=str, location='json')
-        self.request_fields = {
+        self.user_fields = {
             'username': fields.String,
             'email': fields.String,
             'password': fields.String,
-            'uri': fields.Url('get_one_request')
+            'uri': fields.Url('get_one_user')
         }
 
         super(UserResource, self).__init__()
 
-    def get(self, id):
-        req = [req for req in requests if req['id'] == id]
-        if len(req) == 0:
+    def get(self, user_id):
+        user = [user for user in USERS if user['user_id'] == user_id]
+        if len(user) == 0:
             abort(404)
-        return {'req': marshal(req[0], self.request_fields)}, 200
+        return {'user': marshal(user[0], self.user_fields)}, 200
 
-    def put(self, id):
-        req = [req for req in self.request_fields if req['id'] == id]
-        if len(req) == 0:
+    def put(self, user_id):
+        """ updates a user """
+        user = [user for user in self.user_fields if user['user_id'] == user_id]
+        if len(user) == 0:
             abort(404)
-        req = req[0]
+        user = user[0]
         args = self.parse2.parse_args()
         for k, v in args.items():
             if v is not None:
-                req[k] = v
-        return {'req': marshal(req, self.request_fields)}, 200
+                user[k] = v
+        return {'user': marshal(user, self.user_fields)}, 200
 
-    def delete(self, id):
-        req = [req for req in requests if req['id'] == id]
-        if len(req) == 0:
+    def delete(self, user_id):
+        """ deletes a user """
+        user = [user for user in USERS if user['user_id'] == user_id]
+        if len(user) == 0:
             abort(404)
-        requests.remove(req[0])
+        USERS.remove(user[0])
         return {'result': True}
