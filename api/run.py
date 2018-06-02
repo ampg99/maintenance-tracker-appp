@@ -1,8 +1,8 @@
 import os
 from flask import Flask, jsonify
 from flask_restful import Api
-from users import UsersRegisterResource, UserResource
-from requests import RequestsListResource, RequestResource
+from api.resources.users import UsersRegisterResource, UserResource
+from api.resources.requests import RequestsListResource, RequestResource
 from app import Testing
 
 def create_app(filename):
