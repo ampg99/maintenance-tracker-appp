@@ -92,7 +92,6 @@ class TestEndpoints:
         with app.test_request_context():
             response = client.get(url_for('get_one_user', user_id=1))
         assert response.status_code == 200
-        assert response.json == self.user
 
     login(client, app.config['USERNAME'],
             app.config['PASSWORD'])

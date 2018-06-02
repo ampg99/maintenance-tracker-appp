@@ -39,18 +39,13 @@ class UsersRegisterResource(Resource):
                 USERS.append(user)
 
             else:
-                for user in USERS:
-                    if user['username'] in user.values():
-                        return {'message': 'That username is already taken, please choose another'}
-                    else:
-                        user = {
-                            'user_id': USERS[-1]['user_id'] + 1,
-                            'username': args['username'],
-                            'email': args['email'],
-                            'password': sha256_crypt.encrypt((str(user['password'])))
-                        }
-                        USERS.append(user)
-                        return redirect(url_for('get_one_user'))
+                user = {
+                    'user_id': USERS[-1]['user_id'] + 1,
+                    'username': args['username'],
+                    'email': args['email'],
+                    'password': sha256_crypt.encrypt((str(user['password'])))
+                }
+                USERS.append(user)
             return {'new_user': marshal(user, self.user_fields)}, 201
 
 

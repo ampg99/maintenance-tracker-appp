@@ -1,8 +1,8 @@
 import os
 from flask import Flask, jsonify
 from flask_restful import Api
-from resources.users import UsersRegisterResource, UserResource
-from resources.requests import RequestsListResource, RequestResource
+from api.resources.users import UsersRegisterResource, UserResource
+from api.resources.requests import RequestsListResource, RequestResource
 
 def create_app(filename):
     """The method creates a flask app"""
@@ -31,7 +31,3 @@ def create_app(filename):
 
 
     return app
-
-if __name__ == '__main__':
-    app = create_app('config')
-    app.run(debug=True)
