@@ -19,6 +19,71 @@ Maintenance Tracker App is an application that provides users with the ability t
 - The admin should be able to filter requests
 - The user can view all his/her requests
 
+# Installation and Setup
+Clone the repository.
+```bash
+git clone https://github.com/asheuh/Maintenance-Tracker-app
+```
+## Navigate to the API folder
+```bash
+cd Maintenance-Tracker-app/api
+```
+
+## Create a virtual environment
+
+```bash
+$ virtualenv venv
+$ source venv/bin/activate
+```
+On Windows
+```bash
+py -3 -m venv venv
+```
+
+## Activate the virtual environment
+
+```bash
+source venv/bin/activate
+```
+Windows users
+```bash
+venv\Scripts\activate
+```
+
+## Install requirements( with pip)
+```bash
+$ pip install -r requirements.txt
+```
+
+## Running the application
+After the configuration, you will run the app 
+```bash
+$ python api/run.py
+```
+
+## Url for endpoints
+
+```
+http://localhost:5000/api/v1/
+```
+
+## Testing
+Run pytest to test
+```bash
+pytest
+```
+Z
+## endpoints
+|  Endpoint  | Task  |
+|  ---  | --- |
+| `POST api/v1/users/signup` | signing up a user |
+| `POST api/v1/users/login`  | log in user|
+| `DELETE api/v1/users/lgout` | logout user |
+| `POST api/v1/users/requests` | User create a request | 
+| `GET api/v1/users/requests` | User can view all requests|
+| `PUT api/v1/users/requests/<request_id>` | User updates a request |
+| `GET api/v1/users/requests/<request_id>` | User gets a request (one)|
+| `GET api/v1/users/<int:id>` | Get user details |
 
 #### 1. Sign Up for the Service
 
