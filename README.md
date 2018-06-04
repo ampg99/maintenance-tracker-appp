@@ -1,5 +1,5 @@
 # Maintenance-Tracker-App
-[![Build Status](http://img.shields.io/travis/ryanj/flask-base.svg)](https://travis-ci.org/ryanj/flask-base) [![Deploy](https://img.shields.io/badge/Launch_on-OpenShift-brightgreen.svg)](https://openshift.redhat.com/app/console/application_type/custom?cartridges%5B%5D=python-2&initial_git_url=https%3A%2F%2Fgithub.com%2Fryanj%2Fflask-base.git&name=flask)
+[![Build Status](http://img.shields.io/travis/ryanj/flask-base.svg)](https://travis-ci.org/ryanj/flask-base) 
 ![Travis](https://img.shields.io/travis/asheuh/Maintenance-Tracker-App.svg)
 [![Coverage Status](https://coveralls.io/repos/github/asheuh/maintenance-tracker-appp/badge.svg?branch=backend-develop)](https://coveralls.io/github/asheuh/maintenance-tracker-appp?branch=backend-develop)
 ![GitHub last commit](https://img.shields.io/github/last-commit/asheuh/Maintenance-Tracker-App/develop.svg)
