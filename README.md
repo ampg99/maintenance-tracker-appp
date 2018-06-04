@@ -93,7 +93,7 @@ https://m-tracker-heroku-app.herokuapp.com/api/v1/users
 #### 1. Sign Up for the Service
 
 
-- Sign up at: https://asheuh.github.io/Maintenance-Tracker-App/
+- Sign up at: https://asheuh.github.io/maintenance-tracker-appp/
 ```
 (_you need to use a "real" email address ...
 Maintenance-Tracker-App will send you and alert if one of your projects has a security vulnerability so make sure it's
