@@ -1,6 +1,6 @@
 import json
 from unittest import TestCase
-from model.models import Admin, User
+from ..model.models import Admin, User
 
 from api import create_app, clear
 
