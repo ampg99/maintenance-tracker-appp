@@ -86,7 +86,7 @@ Z
 
 #### 1. Sign Up for the Service
 
-- Sign up at: https://asheuh.github.io/Maintenance-Tracker-App/
+- Sign up at: https://asheuh.github.io/maintenance-tracker-appp/
 ```
 (_you need to use a "real" email address ...
 Maintenance-Tracker-App will send you and alert if one of your projects has a security vulnerability so make sure it's
@@ -114,7 +114,7 @@ so you can keep track of  your requests
 - If you want to _encourage_ people to contribute to this project, by reminding them that you _welcome_ their input go to the app and use it
 
 ### Template
-- You can view the UI template on [Github Pages](https://asheuh.github.io/Maintenance-Tracker-App/)
+- You can view the UI template on [Github Pages](https://asheuh.github.io/maintenance-tracker-appp/)
 
 ## Authors
 
