@@ -3,9 +3,9 @@ python:
     - "3.6"
 install:
     - pip install -r requirements.txt
+    - pip install coveralls
 script:
-    - nosetests --with-coverage --cover-package=routes api/tests/*
+    - nosetests api/tests/*
 # run coverage tests
 after_success:
   - coveralls
-  - codecov --token=150e09b5-1455-4b78-ba2d-6ddfbbcf43de
