@@ -10,12 +10,11 @@ from flask_sqlalchemy import SQLAlchemy
 # local import
 from .config import app_config
 
-def create_app(config_name):
+def create_app(config_name="DEVELOPMENT"):
 
     # load configuration and bootstrap flask
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
-    app.config.from_pyfile('config.py')
     mail = Mail(app)
     jwt = JWTManager(app)
 
@@ -29,7 +28,7 @@ def create_app(config_name):
 
     
     # add endpoints to flask restful api 
-    # app.register_blueprint(admin, url_prefix="/api/v1/admin")
+    app.register_blueprint(admin, url_prefix="/api/v1/admin")
     app.register_blueprint(USER, url_prefix="/api/v1/users")
 
     return app

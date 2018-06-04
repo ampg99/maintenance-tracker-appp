@@ -39,9 +39,9 @@ class ProductionConfig(Config):
 
 app_config = {
     'DEVELOPMENT': DevelopmentConfig,
-    'testing': TestingConfig,
-    'staging': StagingConfig,
-    'production': ProductionConfig,
+    'TESTING': TestingConfig,
+    'STAGING': StagingConfig,
+    'PRODUCTION': ProductionConfig,
 }
 
 default_config = app_config['DEVELOPMENT']
