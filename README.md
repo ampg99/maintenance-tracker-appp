@@ -91,7 +91,6 @@ https://m-tracker-heroku-app.herokuapp.com/api/v1/users
 
 #### 1. Sign Up for the Service
 
-
 - Sign up at: https://asheuh.github.io/maintenance-tracker-appp/
 ```
 (_you need to use a "real" email address ...
@@ -121,8 +120,13 @@ so you can keep track of  your requests
 
 - If you want to _encourage_ people to contribute to this project, by reminding them that you _welcome_ their input go to the app and use it
 
+
 #### Template
 - You can view the UI template on [Github Pages](https://asheuh.github.io/Maintenance-Tracker-App/)
+
+### Template
+- You can view the UI template on [Github Pages](https://asheuh.github.io/maintenance-tracker-appp/)
+
 
 #### Authors
 
