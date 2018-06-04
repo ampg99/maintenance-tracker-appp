@@ -2,7 +2,7 @@ import json
 from unittest import TestCase
 from ..model import models
 
-from api import create_app, clear
+from api import create_app
 
 
 class BaseTestCase(TestCase):
@@ -19,8 +19,6 @@ class BaseTestCase(TestCase):
     def full_endpoint(self, path=""):
         return self.api_prefix + path
 
-    def tearDown(self):
-        clear()
 
 
 class AuthenticatedTestCase(BaseTestCase):
