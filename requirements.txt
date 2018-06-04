@@ -14,18 +14,7 @@ backports.functools-lru-cache==1.5
 backports.shutil-get-terminal-size==1.0.0
 BBQSQL==1.0
 bcrypt==3.1.4
-BeautifulSoup==3.2.1
-beautifulsoup4==4.6.0
-billiard==3.5.0.3
-blinker==1.4
-boto==2.48.0
-capstone==3.0.4
 celery==4.1.0
-certifi==2018.4.16
-cffi==1.11.5
-chardet==3.0.4
-Cheetah==2.4.4
-CherryPy==8.9.1
 ## FIXME: could not find svn URL in dependency_links for this package:
 chirp===daily-20170714
 click==6.7
