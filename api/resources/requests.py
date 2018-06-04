@@ -3,6 +3,10 @@ from flask_restful import Api, Resource, reqparse, fields, marshal
 
 requests = []
 
+def get_password(username):
+    if username == 'miguel':
+        return 'python'
+    return None
 class RequestsListResource(Resource):
     """ The class creates two end points , get_all_requests and create request """
 
