@@ -1,6 +1,6 @@
 import json
 from unittest import TestCase
-from ..model.models import Admin, User
+from ..model import models
 
 from api import create_app, clear
 
@@ -28,11 +28,11 @@ class AuthenticatedTestCase(BaseTestCase):
     def setUp(self):
         super().setUp()
         """Create access token for the test cases"""
-        self.admin = Admin()
+        self.admin = models.Admin()
         self.admin.username = "admin"
         self.admin.password = "admin"
 
-        self.user = User()
+        self.user = models.User()
         self.user.firstname = "Moses"
         self.user.lastname = "Gitau"
         self.user.username = "gitaumoses"
