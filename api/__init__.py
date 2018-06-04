@@ -1,33 +1,35 @@
-import os
-from flask import Flask, jsonify
+from flask import Flask
 from flask_restful import Api
-from api.resources.users import UsersRegisterResource, UserResource
-from api.resources.requests import RequestsListResource, RequestResource
+from flask_restful.utils import cors
+from flask_mail import Mail
+from flask_jwt_extended import JWTManager
+from .model import initial
+from .resources.userAPI import USER
+from flask_sqlalchemy import SQLAlchemy
 
-def create_app(filename):
-    """The method creates a flask app"""
+# local import
+from .config import app_config
+
+def create_app(config_name):
+
+    # load configuration and bootstrap flask
     app = Flask(__name__)
-    app.config.from_object(filename)
-    app.config.update(dict(
-        TESTING = True,
-        DEBUG=True,
-        SECRET_KEY=os.urandom(24),
-        USERNAME='admin',
-        PASSWORD='default'
-    ))
+    app.config.from_object(app_config[config_name])
+    app.config.from_pyfile('config.py')
+    mail = Mail(app)
+    jwt = JWTManager(app)
 
+    @jwt.token_in_blacklist_loader
+    def check_token(token):
+        """check if the token is blacklisted"""
+        return token['jti'] in initial.db.blacklist
     api = Api(app)
+    api.decorators = [cors.crossdomain(origin='*',
+                                    headers='my-header, accept, content-type, token')]
 
-    api.add_resource(UsersRegisterResource, '/api/v1/users', '/api/v1/users/', endpoint='get_users')
-    api.add_resource(UserResource, '/api/v1/users/<int:user_id>', endpoint='get_one_user')
-    api.add_resource(UserResource, '/api/v1/users/<int:user_id>', endpoint='delete_user')
-    api.add_resource(UserResource, '/api/v1/users/<int:user_id>', endpoint='update_user')
-    api.add_resource(UserResource, '/api/v1/users', endpoint='create_user')
-    api.add_resource(RequestsListResource, '/api/v1/users/<int:user_id>/requests', '/api/v1/requests/', endpoint='get_requests')
-    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests/<int:id>', endpoint='get_one_request')
-    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests/<int:id>', endpoint='update_request')
-    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests/<int:id>', endpoint='delete_request')
-    api.add_resource(RequestResource, '/api/v1/users/<int:user_id>/requests', endpoint='create_request')
-
+    
+    # add endpoints to flask restful api 
+    # app.register_blueprint(admin, url_prefix="/api/v1/admin")
+    app.register_blueprint(USER, url_prefix="/api/v1/users")
 
     return app
