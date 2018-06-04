@@ -9,7 +9,6 @@ astroid==1.6.3
 atomicwrites==1.1.5
 attrs==18.1.0
 Automat==0.6.0
-backdoor-factory==0.0.0
 backports-abc==0.5
 backports.functools-lru-cache==1.5
 backports.shutil-get-terminal-size==1.0.0
