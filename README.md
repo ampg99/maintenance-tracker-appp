@@ -1,6 +1,5 @@
 # Maintenance-Tracker-App
 ![Travis](https://img.shields.io/travis/asheuh/maintenance-tracker-appp.svg)
-[![Coverage Status](https://coveralls.io/repos/github/asheuh/maintenance-tracker-appp/badge.svg?branch=backend-develop)](https://coveralls.io/github/asheuh/maintenance-tracker-appp?branch=backend-develop)
 ![GitHub last commit](https://img.shields.io/github/last-commit/asheuh/Maintenance-Tracker-App/develop.svg)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/asheuh/Maintenance-Tracker-App.svg)
@@ -71,7 +70,7 @@ Run pytest to test
 ```bash
 pytest
 ```
-Z
+
 ## endpoints
 |  Endpoint  | Task  |
 |  ---  | --- |
@@ -83,6 +82,12 @@ Z
 | `PUT api/v1/users/requests/<request_id>` | User updates a request |
 | `GET api/v1/users/requests/<request_id>` | User gets a request (one)|
 | `GET api/v1/users/<int:id>` | Get user details |
+
+
+- The api is hosted at [Heroku](https://dashboard.heroku.com)
+#### Can be accessed via the following url
+https://m-tracker-heroku-app.herokuapp.com/api/v1/users
+
 
 #### 1. Sign Up for the Service
 
@@ -102,29 +107,36 @@ an email address you check regularly or better one that you receive on your phon
 ```Password```
 ```Conform Password```
 
+
 #### 2. Create your "Request" 
+
 
 - Once you have verified your account with `Maintenance Tracker` go a head and make a `a Maintenance request`
 so you can keep track of  your requests
 
 ![createrequestpage](https://user-images.githubusercontent.com/22955146/40580598-300ac1be-614a-11e8-820b-c60cc5290a53.png)
 
-### Contributing 
+#### Contributing 
 
 - If you want to _encourage_ people to contribute to this project, by reminding them that you _welcome_ their input go to the app and use it
+
+
+#### Template
+- You can view the UI template on [Github Pages](https://asheuh.github.io/Maintenance-Tracker-App/)
 
 ### Template
 - You can view the UI template on [Github Pages](https://asheuh.github.io/maintenance-tracker-appp/)
 
-## Authors
+
+#### Authors
 
 * **Brian Mboya** - *Initial work* - [asheuh](https://github.com/asheuh)
 
-## License
+#### License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-## Acknowledgments
+#### Acknowledgments
 
 * Thank's for my follow bootcampers at Open Andela
 * Inspiration
