@@ -8,27 +8,25 @@ from .resources.userAPI import USER
 from flask_sqlalchemy import SQLAlchemy
 
 # local import
-from .config import app_config
+from .config import config
 
 def create_app(config_name="DEVELOPMENT"):
-
+    
     # load configuration and bootstrap flask
+
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(app_config[config_name])
-    mail = Mail(app)
+    app.config.from_object(config[config_name])
+
     jwt = JWTManager(app)
 
     @jwt.token_in_blacklist_loader
     def check_token(token):
         """check if the token is blacklisted"""
         return token['jti'] in initial.db.blacklist
-    api = Api(app)
-    api.decorators = [cors.crossdomain(origin='*',
-                                    headers='my-header, accept, content-type, token')]
-
-    
+        
     # add endpoints to flask restful api 
-    app.register_blueprint(admin, url_prefix="/api/v1/admin")
+
+    #app.register_blueprint(admin, url_prefix="/api/v1/admin")
     app.register_blueprint(USER, url_prefix="/api/v1/users")
 
     return app
