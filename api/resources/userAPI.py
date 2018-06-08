@@ -13,6 +13,8 @@ from flask import (
     Blueprint, 
     make_response
 )
+from mongoengine.errors import NotUniqueError, ValidationError
+from passlib.handlers.bcrypt import bcrypt
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import (
     jwt_required, 
@@ -23,12 +25,17 @@ from flask_jwt_extended import (
 from ..model.models import User, Request
 from ..model.user import UserStore
 from ..model.initial import db, get_current_user
-from mongoengine.errors import NotUniqueError, ValidationError
-from passlib.handlers.bcrypt import bcrypt
 
 
 USER = Blueprint("api.userAPI.user", __name__)
 
+
+@USER.route("/all_users", methods=["GET"])
+def all_users():
+    headers = {"Content-type": "application/json"}
+    users = db.users.get_all_users()
+    response = {"All users": users}
+    return jsonify(response)
 
 @USER.route("/auth/signup", methods=["POST"])
 def create_user():
@@ -52,9 +59,7 @@ def create_user():
 
 @USER.route("/auth/login", methods=["POST"])
 def post():
-    """
-    Login in the user and store the user id and token pair into redis
-    """
+    """ Login in the user and store the user id and token pair into redis """
     try:
         # Get user email and password. Was not checked cause none type has no attribute strip.
         email, password = request.json.get('username').strip(), request.json.get('password').strip()
@@ -62,9 +67,6 @@ def post():
         return {"Status": "error", "Message": e}
 
     user = db.users.gey_by_field("username", request.json.get("username"))
-
-    print('before if statement',type(request.json.get("password")))
-
     if not user:
         response =  {"status": "error", "message": "Username does not exist"}
         return jsonify(response), 400
@@ -72,12 +74,12 @@ def post():
         response =  {"status": "error", "message": "The password you provided is wrong"}
         return jsonify(response), 400
 
-    login_token = create_access_token(identity=user['username'])
+    token = create_access_token(identity=user['username'])
     return jsonify({
         "status": "login successfull",
         "details": {
             "user": user,
-            "token": login_token
+            "token": token
         }
     }), 200
 
@@ -96,12 +98,17 @@ def logout_user():
 @USER.route("/requests", methods=["POST"])
 @jwt_required
 def create_a_new_request():
-    result = request.json
-    a_request = Request(title=result['title'],
-                        description=result['description'],
-                        created_by=get_current_user())
+    output = request.json
+    title = output['title']
+    description = output['description']
+    owner = get_current_user()
+    a_request = Request(title, description, owner)
     db.requests.insert(a_request)
-    return jsonify({"status": "request sent successfully","data": {"request": a_request.json_obj()}}), 201
+    response = {
+        "status": "request sent successfully",
+        "data": {"request": a_request.json_obj()}
+        }
+    return jsonify(), 201
 
 @USER.route("/requests", methods=["GET"])
 @jwt_required
