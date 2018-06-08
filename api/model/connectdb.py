@@ -1,6 +1,9 @@
 import psycopg2
 import psycopg2.extras
-from urllib.parse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+     from urlparse import urlparse
 
 
 def Connection():

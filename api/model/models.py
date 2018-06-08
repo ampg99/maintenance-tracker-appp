@@ -1,9 +1,9 @@
+#! /usr/bin/python3
 from flask_redis import Redis
 from flask import current_app
 from datetime import datetime
 import json
-from marshmallow import Schema, fields, validate
-from api.config import default_config
+from api import config
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer)
 
@@ -15,14 +15,13 @@ STATUS_RESOLVED = "Resolved"
 
 class MainModel:
 
-    def __init__(self):
-        self.id = 0
+    def json_obj(self, exclude=True):
+        """Changes to response to json object"""
+        return json.loads(self.json_str(exclude))
 
-    def to_json_object(self, exclude=True):
-        return json.loads(self.to_json_str(exclude))
-
-    def to_json_str(self, exclude=True):
-        fields = self.excluded_fields()
+    def json_str(self, exclude=True):
+        """changes the response to string value"""
+        fields = self.fields_not_included()
         if not exclude:
             fields = []
         return json.dumps(self,
@@ -30,19 +29,21 @@ class MainModel:
                           else {k: v for k, v in o.__dict__.items() if
                                 k not in fields})
 
-    def excluded_fields(self):
+    def fields_not_included(self):
+        """These are the items that are excluded from each field values"""
         return ['created_at', 'updated_at']
 
 
 
 class User(MainModel):
+    """The main user class that creates the user"""
 
-    
-    ADMIN_ROLE = "Administrator"
+    ADMIN_ROLE = "Superuser"
     USER_ROLE = "User"
 
-    def __init__(self, username="", email="",  password=""):
-
+    def __init__(self, username="", email="", password=""):
+        """Initializes the user details"""
+        super().__init__()
         self.username = username
         self.email = email
         self.password = password
@@ -51,42 +52,47 @@ class User(MainModel):
     def __repr__(self):
         return '<User(username={self.__username!r})>'.format(self=self)
 
-class UserSchema(Schema):
-    username = fields.Str(required=True)
-    email = fields.Email(required=True,validate=validate.Email(error="Not a valid email"))
-    password = fields.String(required=True)
+    def to_json(self):
+        return {
+            "username": self.username,
+            "email": self.email,
+            "password": self.password,
+            "role": self.role
+        }
 
 class SuperUser(User):
+    """The superuser class for creating the admin"""
 
     def __init__(self, username="", email="", password=""):
-        #super(__class__, self).__init__(username, email, password)
+        """Intializes the role of an admin"""
+        super().__init__(username, email, password)
         self.role = User.ADMIN_ROLE
+
 
     @staticmethod
     def admin_details():
-        admin = SuperUser()
-        admin.email = default_config.EMAIL
-        admin.username = default_config.USERNAME
-        admin.password = default_config.PASSWORD
+        """Provides the superuser details from the default admin configuration"""
+        superuser = SuperUser()
+        superuser.email = config.config_app.EMAIL
+        superuser.username = config.config_app.USERNAME
+        superuser.password = config.config_app.PASSWORD
 
-        return admin
-
-
-class AdminSchema(Schema):
-    username = fields.Str(required=True)
-    email = fields.Email(required=True,validate=validate.Email(error="Not a valid email"))
-    password = fields.String(required=True)
+        return superuser
 
 
 class Request(MainModel):
+    """The class creates the request models"""
 
-    def __init__(self, requestname="", description="", created_by=None,
-                 created_at=datetime.now(), updated_at=datetime.now(), status=None):
-        super().__init__(created_date, updated_data)
+    def __init__(self, requestname="",
+                 description="", created_by=None,
+                 created_date=datetime.now(),
+                 updated_date=datetime.now(),
+                 status=None):
         self.requestname = requestname
         self.description = description
         self.status = status
         self.created_by = created_by
+        super().__init__(created_date, updated_date)
 
-    def excluded_fields(self):
+    def fields_not_included(self):
         return ['updated_date']

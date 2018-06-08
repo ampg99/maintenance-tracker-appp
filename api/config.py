@@ -1,10 +1,8 @@
-
 import os
-
 class Configuration:
     DEBUG = False
     CSRF_ENABLED = True
-    JWT_SECRET_KEY = "flask runs"
+    JWT_SECRET_KEY = "i love hot ladies"
     TESTING = False
     USERNAME = "admin"
     PASSWORD = "barryazah"
@@ -14,18 +12,13 @@ class Development(Configuration):
     DEBUG = True
 
 
-class Production(Development):
-    pass
-
-
 class Testing(Development):
     TESTING = True
 
 
 config = {
     "TESTING": Testing,
-    "DEVELOPMENT": Development,
-    "PRODUCTION": Production
+    "DEVELOPMENT": Development
 }
 
-default_config = config['DEVELOPMENT']
+config_app = config['DEVELOPMENT']
