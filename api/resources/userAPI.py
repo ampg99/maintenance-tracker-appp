@@ -74,10 +74,10 @@ def post():
 
     login_token = create_access_token(identity=user['username'])
     return jsonify({
-        "status": "successfull login",
+        "status": "login successfull",
         "details": {
-            "login_token": login_token,
-            "user": user
+            "user": user,
+            "token": login_token
         }
     }), 200
 

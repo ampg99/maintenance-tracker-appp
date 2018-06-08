@@ -24,7 +24,7 @@ def setUp():
 
     with app.test_request_context():
         client().post(
-            url_for("users/auth/create_account"),
+            url_for("users/auth/signup"),
             data=user.json_str(False),
             headers=headers
         )
