@@ -1,68 +1,71 @@
 import json
+from api.model.models import User
 from unittest import TestCase
 from ..model import models
 
 from api import create_app
 
 
-class BaseTestCase(TestCase):
-    api_prefix = "/api/v1/"
+main_url = "/api/v1/"
 
-    def setUp(self):
-        self.app = initialize_app("TESTING")
-        self.client = self.app.test_client
-        self.headers = {'Content-Type': 'application/json'}
-        self.admin_headers = {'Content-Type': 'application/json'}
-        self.no_json_headers = {}
-        self.admin_no_json_headers = {}
+def setUp(self):
+    self.app = create_app("TESTING")
+    self.client = self.app.test_client
+    self.headers = {'Content-Type': 'application/json'}
+    self.superuser_headers = {'Content-Type': 'application/json'}
+    self.admin = models.Admin()
+    self.admin.username = "asheuh"
+    self.admin.password = "barryazah"
+    self.user = models.User()
+    self.user.username = "mboya"
+    self.user.email = "mboyabryan49@gmail.com"
+    self.user.password = "123456789"
+    self.client().post(
+        self.full_endpoint("users/auth/create_account"),
+        data=self.user.to_json_str(False),
+        headers=self.headers
+    )
 
-    def full_endpoint(self, path=""):
-        return self.api_prefix + path
+    result = self.client().post(
+        self.full_endpoint('users/login'),
+        data=self.user.to_json_str(False),
+        headers=self.headers
+    )
+    json_result = json.loads(result.get_data(as_text=True))
 
+    self.headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
+    self.no_json_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
+    # Login admin
 
+    result = self.client().post(
+        self.full_endpoint('admin/login'),
+        data=self.admin.to_json_str(False),
+        headers=self.admin_headers
+    )
 
-class AuthenticatedTestCase(BaseTestCase):
+    json_result = json.loads(result.get_data(as_text=True))
+    self.admin_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
+    self.admin_no_json_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
 
-    def setUp(self):
-        super().setUp()
-        """Create access token for the test cases"""
-        self.admin = models.Admin()
-        self.admin.username = "admin"
-        self.admin.password = "admin"
+def test_user_can_sign_up(self):
+    result = self.client().post(self.full_endpoint('users/auth/create_account'), headers=self.no_json_headers)
+    self.assertEqual(result.status_code, 400)
 
-        self.user = models.User()
-        self.user.firstname = "Moses"
-        self.user.lastname = "Gitau"
-        self.user.username = "gitaumoses"
-        self.user.email = "gitaumoses@gmail.com"
-        self.user.password = "password"
+    json_result = json.loads(result.get_data(as_text=True))
+    self.assertEqual(json_result['message'], "Request should be in JSON")
 
-        self.client().post(
-            self.full_endpoint("users/signup"),
-            data=self.user.to_json_str(False),
-            headers=self.headers
-        )
+    result = self.client().post(self.full_endpoint('users/auth/create_account'), data=self.user.to_json_str(False),
+                                headers=self.headers)
+    json_result = json.loads(result.get_data(as_text=True))
+    self.assertEqual(result.status_code, 201)  # Resource created
 
-        result = self.client().post(
-            self.full_endpoint('users/login'),
-            data=self.user.to_json_str(False),
-            headers=self.headers
-        )
-        json_result = json.loads(result.get_data(as_text=True))
+    self.assertEqual(json_result['status'], "success")
 
-        self.headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
-        self.no_json_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
-        # Login admin
+def test_user_cannot_sign_up_with_invalid_details(self):
+    self.user.username = ""
+    result = self.client().post(self.full_endpoint('users/auth/create_account'), data=self.user.to_json_str(False),
+                                headers=self.headers)
+    json_result = json.loads(result.get_data(as_text=True))
+    self.assertEqual(result.status_code, 400)  # Resource created
 
-        result = self.client().post(
-            self.full_endpoint('admin/login'),
-            data=self.admin.to_json_str(False),
-            headers=self.admin_headers
-        )
-
-        json_result = json.loads(result.get_data(as_text=True))
-        self.admin_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
-        self.admin_no_json_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
-
-    def tearDown(self):
-        super().tearDown()
+    self.assertEqual(json_result['status'], "error")
