@@ -22,10 +22,11 @@ def setUp():
     user.email = "mboyabryan49@gmail.com"
     user.password = "123456789"
     client().post(
-        url_for("users/auth/create_account"),
-        data=user.json_str(False),
-        headers=headers
-    )
+        with app.test_request_context():
+            url_for("users/auth/create_account"),
+            data=user.json_str(False),
+            headers=headers
+        )
 
     result = client().post(
         url_for('users/auth/login'),
