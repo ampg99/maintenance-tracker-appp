@@ -21,8 +21,9 @@ def setUp():
     user.username = "mboya"
     user.email = "mboyabryan49@gmail.com"
     user.password = "123456789"
-    client().post(
-        with app.test_request_context():
+
+    with app.test_request_context():
+        client().post(
             url_for("users/auth/create_account"),
             data=user.json_str(False),
             headers=headers
