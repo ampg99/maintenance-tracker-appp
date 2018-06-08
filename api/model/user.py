@@ -1,12 +1,11 @@
 import hashlib
 import re
-import pprint
-import psycopg2.extras
-from flask import request
-from .models import User, MainModel
 from passlib.handlers.bcrypt import bcrypt
 from psycopg2.extensions import adapt, register_adapter, AsIs
 from flask import jsonify
+import psycopg2.extras
+from flask import request
+from .models import User, MainModel
 from .connectdb import Connection
 
 class UserMixing:
@@ -39,7 +38,8 @@ class UserMixing:
     def insert(self, user):
         assert isinstance(user, MainModel)
         try:
-            query = ("INSERT INTO mt_users (username, email, password) VALUES (%(username)s, %(email)s, %(password)s);")
+            query = ("INSERT INTO mt_users (username, email, password) \
+            VALUES (%(username)s, %(email)s, %(password)s);")
             print(user.to_json())
             self.cur.execute(query, (user.to_json()))
             self.conn.commit()

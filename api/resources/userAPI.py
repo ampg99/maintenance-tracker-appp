@@ -1,29 +1,38 @@
-from flask import abort, jsonify, request, json, Response
-from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity, get_raw_jwt
-from ..model.models import User, Request
-from ..model.user import UserStore
-from ..model.initial import db, get_current_user
-from mongoengine.errors import NotUniqueError, ValidationError
-from passlib.handlers.bcrypt import bcrypt
-from flask import Blueprint, make_response
 import requests
 import psycopg2
 try:
     from urllib.parse import urlparse
 except ImportError:
      from urlparse import urlparse
-
+from flask import (
+    abort, 
+    jsonify, 
+    request, 
+    json, 
+    Response, 
+    Blueprint, 
+    make_response
+)
+from flask_restful import Resource, reqparse
+from flask_jwt_extended import (
+    jwt_required, 
+    create_access_token, 
+    get_jwt_identity, 
+    get_raw_jwt
+)
+from ..model.models import User, Request
+from ..model.user import UserStore
+from ..model.initial import db, get_current_user
+from mongoengine.errors import NotUniqueError, ValidationError
+from passlib.handlers.bcrypt import bcrypt
 
 
 USER = Blueprint("api.userAPI.user", __name__)
 
 
-@USER.route("/auth/create_account", methods=["POST"])
+@USER.route("/auth/signup", methods=["POST"])
 def create_user():
-    """
-    Create a new user and send an activation email
-    """ 
+    """Create a new user and send an activation email""" 
     user, errors = db.users.is_valid(request.json)
     if errors:
         message = json.dumps({'errors': errors})
@@ -35,7 +44,11 @@ def create_user():
     user = User(username, email, password)
     db.users.insert(user)
     headers = {"Content-type": "application/json"}
-    return jsonify({"New_user": user.json_obj()})
+    response = {
+        "status": "User successfully created",
+        "New_user": user.json_obj()
+    }
+    return jsonify(response)
 
 @USER.route("/auth/login", methods=["POST"])
 def post():
@@ -94,7 +107,7 @@ def create_a_new_request():
 @jwt_required
 def get_requests():
     requests = [x.to_json_object() for x in db.requests.query_all().values() if
-                x.created_by.username == get_jwt_identity()]  # get requests for this user
+                x.created_by.username == get_jwt_identity()]
     return jsonify({
         "status": "success",
         "data": {

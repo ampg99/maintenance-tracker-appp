@@ -12,7 +12,7 @@ def Connection():
     password = results.password
     host = results.hostname
     dbname = results.path[1:]
-    conn = psycopg2.connect(dbname='maintenancetracker', user='postgres', host='localhost', password='@bashtech1234')
+    conn = psycopg2.connect(dbname='demo', user='postgres', host='localhost', password='@bashtech1234')
     cursor = conn.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTs mt_requests (request_id serial PRIMARY KEY, requestname varchar, description varchar);")
     cursor.execute("CREATE TABLE IF NOT EXISTs mt_users (user_id serial PRIMARY KEY, username varchar, email varchar, password varchar);")
