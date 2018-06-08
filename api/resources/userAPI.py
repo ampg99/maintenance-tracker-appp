@@ -1,35 +1,43 @@
 from flask import abort, jsonify, request, json, Response
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity, get_raw_jwt
-from ..model.models import User, UserSchema, Request
+from ..model.models import User, Request
 from ..model.user import UserStore
 from ..model.initial import db, get_current_user
 from mongoengine.errors import NotUniqueError, ValidationError
 from passlib.handlers.bcrypt import bcrypt
 from flask import Blueprint, make_response
 import requests
+import psycopg2
+try:
+    from urllib.parse import urlparse
+except ImportError:
+     from urlparse import urlparse
+
 
 
 USER = Blueprint("api.userAPI.user", __name__)
 
 
-@USER.route("/create_account", methods=["POST"])
+@USER.route("/auth/create_account", methods=["POST"])
 def create_user():
     """
     Create a new user and send an activation email
-    """
+    """ 
     user, errors = db.users.is_valid(request.json)
     if errors:
         message = json.dumps({'errors': errors})
         return Response(message, status=422, mimetype='application/json')
 
-    result = request.json
-    user = User(result['username'], result['email'], result['password'])
+    username = request.json.get('username')
+    email = request.json.get('email')
+    password = request.json.get('password')
+    user = User(username, email, password)
     db.users.insert(user)
     headers = {"Content-type": "application/json"}
-    return jsonify({"New_user": user.to_json_object()})
+    return jsonify({"New_user": user.json_obj()})
 
-@USER.route("/login", methods=["POST"])
+@USER.route("/auth/login", methods=["POST"])
 def post():
     """
     Login in the user and store the user id and token pair into redis
@@ -40,22 +48,23 @@ def post():
     except Exception as e:
         return {"Status": "error", "Message": e}
 
-    user = db.users.query_by_field("username", request.json.get("username"))
+    user = db.users.gey_by_field("username", request.json.get("username"))
+
+    print('before if statement',type(request.json.get("password")))
 
     if not user:
         response =  {"status": "error", "message": "Username does not exist"}
         return jsonify(response), 400
-        
-    elif not bcrypt.verify(request.json.get("password"), user.password):
+    elif not bcrypt.verify( request.json.get("password"), user['password']):
         response =  {"status": "error", "message": "The password you provided is wrong"}
         return jsonify(response), 400
 
-    login_token = create_access_token(identity=user.username)
+    login_token = create_access_token(identity=user['username'])
     return jsonify({
         "status": "successfull login",
         "details": {
             "login_token": login_token,
-            "user": user.to_json_object()
+            "user": user
         }
     }), 200
 
@@ -79,7 +88,7 @@ def create_a_new_request():
                         description=result['description'],
                         created_by=get_current_user())
     db.requests.insert(a_request)
-    return jsonify({"status": "request sent successfully","data": {"request": a_request.to_json_object()}}), 201
+    return jsonify({"status": "request sent successfully","data": {"request": a_request.json_obj()}}), 201
 
 @USER.route("/requests", methods=["GET"])
 @jwt_required
@@ -98,38 +107,33 @@ def get_requests():
 @USER.route("/requests/<int:_id>", methods=["PUT", "GET"])
 @jwt_required
 def update_request(_id):
-    maintenance_request = db.requests.query(_id)
-    if maintenance_request is None:
+    request = db.requests.query(_id)
+    if request is None:
         return jsonify({
             "status": "error",
-            "message": "Maintenance request does not exist"
+            "message": "There is no request with such id."
         }), 404
-    elif maintenance_request.created_by.username != get_jwt_identity():
+    elif request.created_by.username != get_jwt_identity():
         return jsonify({
             "status": "error",
-            "message": "You are not allowed to modify or view this maintenance request"
+            "message": "Sorry, you are not the owner of this request"
         }), 401
     else:
         if request.method == "PUT":
             if request.is_json:
-                valid, errors = db.requests.is_valid(request.json)
-                if not valid:
+                ok, errors = db.requests.is_valid(request.json)
+                if not ok:
                     return jsonify({
                         "status": "error",
                         "data": errors
                     }), 400
                 result = request.json
 
-                maintenance_request.requestname = result['requestname']
-                maintenance_request.description = result['description']
-            else:
-                return jsonify({
-                    "message": "Request should be in JSON",
-                    "status": "error"
-                }), 400
+                request.requestname = result['requestname']
+                request.description = result['description']
 
         return jsonify({
-            "status": "success",
+            "status": "successfully updated request for{}".created_by.username,
             "data": {
-                "request": maintenance_request.to_json_object()}
+                "request": request.json_obj()}
         }), 200
