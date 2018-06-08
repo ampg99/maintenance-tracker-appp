@@ -24,11 +24,14 @@ from flask_jwt_extended import (
 )
 from ..model.models import User, Request
 from ..model.user import UserStore
-from ..model.initial import db, get_current_user
+from ..model.initial import db
 
 
 USER = Blueprint("api.userAPI.user", __name__)
 
+@jwt_required
+def current_user():
+    return db.users.get_by_field("username", get_jwt_identity())
 
 @USER.route("/all_users", methods=["GET"])
 def all_users():
@@ -66,7 +69,7 @@ def post():
     except Exception as e:
         return {"Status": "error", "Message": e}
 
-    user = db.users.gey_by_field("username", request.json.get("username"))
+    user = db.users.get_by_field("username", request.json.get("username"))
     if not user:
         response =  {"status": "error", "message": "Username does not exist"}
         return jsonify(response), 400
@@ -101,7 +104,7 @@ def create_a_new_request():
     output = request.json
     title = output['title']
     description = output['description']
-    owner = get_current_user()
+    owner = current_user()
     a_request = Request(title, description, owner)
     db.requests.insert(a_request)
     response = {
@@ -113,13 +116,13 @@ def create_a_new_request():
 @USER.route("/requests", methods=["GET"])
 @jwt_required
 def get_requests():
-    requests = [x.to_json_object() for x in db.requests.query_all().values() if
+    requests = [x.json_obj() for x in db.requests.query_all().values() if
                 x.created_by.username == get_jwt_identity()]
     return jsonify({
         "status": "success",
         "data": {
-            "total_requests": len(requests),
-            "requests": requests
+            "requests": requests,
+            "all_requests": len(requests)
         }
     }), 200
 
@@ -153,7 +156,7 @@ def update_request(_id):
                 request.description = result['description']
 
         return jsonify({
-            "status": "successfully updated request for{}".created_by.username,
+            "status": "successfully updated request for {}".created_by.username,
             "data": {
                 "request": request.json_obj()}
         }), 200

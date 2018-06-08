@@ -31,7 +31,7 @@ class MainModel:
 
     def fields_not_included(self):
         """These are the items that are excluded from each field values"""
-        return ['created_at', 'updated_at']
+        return ['created_date', 'updated_date']
 
 
 
@@ -68,7 +68,6 @@ class SuperUser(User):
         super().__init__(username, email, password)
         self.role = User.ADMIN_ROLE
 
-
     @staticmethod
     def admin_details():
         """Provides the superuser details from the default admin configuration"""
@@ -77,7 +76,7 @@ class SuperUser(User):
         superuser.username = config.config_app.USERNAME
         superuser.password = config.config_app.PASSWORD
 
-        return superuser
+        return superuser.to_json()
 
 
 class Request(MainModel):

@@ -16,6 +16,10 @@ class Testing(Development):
     TESTING = True
 
 
+class Production(Configuration):
+    DEBUG = False
+
+
 config = {
     "TESTING": Testing,
     "DEVELOPMENT": Development
