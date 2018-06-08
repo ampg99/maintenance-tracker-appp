@@ -1,4 +1,5 @@
 import json
+from flask import url_for
 from api.model.models import User
 from unittest import TestCase
 from ..model import models
@@ -21,40 +22,29 @@ def setUp(self):
     self.user.email = "mboyabryan49@gmail.com"
     self.user.password = "123456789"
     self.client().post(
-        self.full_endpoint("users/auth/create_account"),
-        data=self.user.to_json_str(False),
+        url_for("users/auth/create_account"),
+        data=self.user.json_str(False),
         headers=self.headers
     )
 
     result = self.client().post(
-        self.full_endpoint('users/login'),
-        data=self.user.to_json_str(False),
+        url_for('users/auth/login'),
+        data=self.user.json_str(False),
         headers=self.headers
     )
     json_result = json.loads(result.get_data(as_text=True))
 
     self.headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
     self.no_json_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
-    # Login admin
-
-    result = self.client().post(
-        self.full_endpoint('admin/login'),
-        data=self.admin.to_json_str(False),
-        headers=self.admin_headers
-    )
-
-    json_result = json.loads(result.get_data(as_text=True))
-    self.admin_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
-    self.admin_no_json_headers['Authorization'] = 'Bearer {}'.format(json_result['data']['token'])
 
 def test_user_can_sign_up(self):
-    result = self.client().post(self.full_endpoint('users/auth/create_account'), headers=self.no_json_headers)
+    result = self.client().post(url_for('users/auth/create_account'), headers=self.no_json_headers)
     self.assertEqual(result.status_code, 400)
 
     json_result = json.loads(result.get_data(as_text=True))
     self.assertEqual(json_result['message'], "Request should be in JSON")
 
-    result = self.client().post(self.full_endpoint('users/auth/create_account'), data=self.user.to_json_str(False),
+    result = self.client().post(url_for('users/auth/create_account'), data=self.user.to_json_str(False),
                                 headers=self.headers)
     json_result = json.loads(result.get_data(as_text=True))
     self.assertEqual(result.status_code, 201)  # Resource created
@@ -63,7 +53,7 @@ def test_user_can_sign_up(self):
 
 def test_user_cannot_sign_up_with_invalid_details(self):
     self.user.username = ""
-    result = self.client().post(self.full_endpoint('users/auth/create_account'), data=self.user.to_json_str(False),
+    result = self.client().post(url_for('users/auth/create_account'), data=self.user.to_json_str(False),
                                 headers=self.headers)
     json_result = json.loads(result.get_data(as_text=True))
     self.assertEqual(result.status_code, 400)  # Resource created
