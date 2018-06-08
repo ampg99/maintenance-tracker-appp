@@ -13,7 +13,7 @@ def setUp(self):
     self.client = self.app.test_client
     self.headers = {'Content-Type': 'application/json'}
     self.superuser_headers = {'Content-Type': 'application/json'}
-    self.admin = models.Admin()
+    self.admin = models.SuperUser()
     self.admin.username = "asheuh"
     self.admin.password = "barryazah"
     self.user = models.User()
