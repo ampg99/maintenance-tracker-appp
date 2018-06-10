@@ -6,6 +6,7 @@ from flask import jsonify
 import psycopg2.extras
 from flask import request
 from .models import User, MainModel
+from .requests_models import RequestsModel
 from .connectdb import Connection
 
 class UserMixing:
@@ -21,13 +22,13 @@ class UserMixing:
             # data.append(row)
         return data
 
-    def get_all_with_equal_fields(self, field, value):
+    """def get_all_with_equal_fields(self, field, value):
         result = []
         for item in self.data.values():
             if item.json_obj()[field] == value:
                 result.append(item)
 
-        return result
+        return result"""
 
     def adapt_user(self, user):
         username = adapt(user.username).getquoted()
@@ -40,8 +41,30 @@ class UserMixing:
         try:
             query = ("INSERT INTO mt_users (username, email, password) \
             VALUES (%(username)s, %(email)s, %(password)s);")
-            print(user.to_json())
             self.cur.execute(query, (user.to_json()))
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+
+    def insert_test_tb(self, user):
+        assert isinstance(user, MainModel)
+        try:
+            query = ("INSERT INTO blacklist_tokens (token, blacklist_date) \
+            VALUES (%(token)s, %(blacklist_date)s);")
+            self.cur.execute(query, (user.to_json()))
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+
+    def insert_blacklist(self, user):
+        assert isinstance(user, MainModel)
+        try:
+            query = ("INSERT INTO test_db (username, email, password) \
+            VALUES (%(username)s, %(email)s, %(password)s);")
+            self.cur.execute(query, (user.to_json()))
+            result = self.cur.fetchone()
+            if result is not None:
+                self.user_id = result['user_id']
             self.conn.commit()
         except Exception as e:
             print(e)
@@ -49,7 +72,6 @@ class UserMixing:
     def set(self, user, user_id):
         assert isinstance(user, MainModel)
         a_user = self.get_all_users()
-        print(a_user)
         a_user[user_id] = user
 
     def get_user_by_id(self, user_id):
@@ -68,6 +90,10 @@ class UserMixing:
         user = self.get_all_users()
         del user[user_id]
 
+    def clear(self):
+        pass
+
+
 class UserStore(UserMixing):
     """
     Document for a user's account information
@@ -79,12 +105,10 @@ class UserStore(UserMixing):
 
         # now insert item
         super().insert(user)
-        
-    def hash_password(self, password):
-        """
-        crypt the raw password and store it into database
-        """
-        item.password = hashlib.sha224(item.password).hexdigest()
+
+    def insert_test_tb(self, user):
+        assert isinstance(user, User)
+        super().insert_test_tb(user)
 
     def is_valid(self, user):
 
@@ -107,7 +131,8 @@ class UserStore(UserMixing):
 
 
         return len(errors) == 0, errors
-    
+
+
 class Requests(UserMixing):
     
     def is_valid(self, request):
@@ -117,5 +142,14 @@ class Requests(UserMixing):
 
         if not request.get("description"):
             errors["description"] = "Description should be given"
+
+        return len(errors) == 0, errors
+
+class AdminFeedback(UserMixing):
+    def is_valid(self, item):
+        """Check whether a feedback object has valid fields"""
+        errors = {}
+        if not item.get("message"):
+            errors["message"] = "Feedback message must be provided"
 
         return len(errors) == 0, errors
