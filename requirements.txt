@@ -42,7 +42,6 @@ mongoengine==0.11.0
 more-itertools==4.2.0
 packaging==17.1
 passlib==1.7.1
-pkg-resources==0.0.0
 pluggy==0.6.0
 psycopg2==2.7.3.2
 py==1.5.3
