@@ -1,5 +1,0 @@
-{
-  "api/tests/test_auth.py::TestAuthBlueprint::test_registered_with_already_registered_user": true,
-  "api/tests/user_model_test.py::TestUserModel::()::test_encode_auth_token": true,
-  "api/tests/user_model_test.py::TestUserModel::test_dencode_auth_token": true
-}
