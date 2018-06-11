@@ -269,6 +269,7 @@ class RequestsById(MethodView):
     @jwt_required # Security authentication
     def get(self, request_id):
         """
+        Getting a requests for a logged in user
         objective: GET an item from item database.
         :param name: str - item name
         :return: json - item with status code
