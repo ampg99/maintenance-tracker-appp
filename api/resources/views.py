@@ -155,7 +155,7 @@ class AllUsers(MethodView):
 
 class LogoutAccessAPI(MethodView):
     """ Logout Resource"""
-    @jwt_required
+    @jwt_required # Security authentication
     def post(self):
         # get token
         jti = get_raw_jwt()['jti']
@@ -175,7 +175,7 @@ class LogoutAccessAPI(MethodView):
 
 class LogoutRefreshAPI(MethodView):
     """ Logout Resource"""
-    @jwt_refresh_token_required
+    @jwt_refresh_token_required # Security authentication
     def post(self):
         # get token
         jti = get_raw_jwt()['jti']
@@ -194,7 +194,7 @@ class LogoutRefreshAPI(MethodView):
 
 
 class TokenRefresh(MethodView):
-    @jwt_refresh_token_required
+    @jwt_refresh_token_required # Security authentication
     def post(self):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity=current_user)
@@ -211,7 +211,7 @@ class RequestAPI(MethodView):
                         required=True,
                         help='This field cannot be left blank.')
 
-    @jwt_required
+    @jwt_required # Security authentication
     def post(self):
         """
         objective: POST an new item to item database.
@@ -254,7 +254,7 @@ class RequestAPI(MethodView):
 
 
 class AllRequests(MethodView):
-    @jwt_required
+    @jwt_required # Security authentication
     def get(self):
         headers = {'Content_type': 'application/json'}
         requests = RequestsModel.find_all(self)
@@ -265,7 +265,7 @@ class AllRequests(MethodView):
 
 
 class RequestsById(MethodView):
-    @jwt_required
+    @jwt_required # Security authentication
     def get(self, request_id):
         """
         objective: GET an item from item database.
@@ -284,7 +284,7 @@ class RequestsById(MethodView):
         response = {'request': item}
         return make_response(jsonify(response)), 200
 
-    @jwt_required
+    @jwt_required # Security authentication
     def delete(self, request_id):
         """
         objective: DELETE an item from the item database.
@@ -310,7 +310,7 @@ class RequestsById(MethodView):
             }, 200
             return make_response(jsonify(response))
 
-    @jwt_required
+    @jwt_required # Security authentication
     def put(self, request_id):
         """
         objective: PUT an item into the in-memory database store. If the

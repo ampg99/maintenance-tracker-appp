@@ -1,0 +1,12 @@
+[
+  "api/tests/config_test.py::TestDevelopmentConfig::test_app_is_development",
+  "api/tests/config_test.py::TestTestingConfig::test_app_is_testing",
+  "api/tests/test_auth.py::TestAuthBlueprint::test_invalid_logout",
+  "api/tests/test_auth.py::TestAuthBlueprint::test_non_registered_user_login",
+  "api/tests/test_auth.py::TestAuthBlueprint::test_register_with_already_registered_user_email",
+  "api/tests/test_auth.py::TestAuthBlueprint::test_registered_user_login",
+  "api/tests/test_auth.py::TestAuthBlueprint::test_signup",
+  "api/tests/test_auth.py::TestAuthBlueprint::test_valid_logout",
+  "api/tests/user_model_test.py::TestUserModel::test_decode_auth_token",
+  "api/tests/user_model_test.py::TestUserModel::test_encode_auth_token"
+]
