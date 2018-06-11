@@ -316,6 +316,7 @@ class RequestsById(MethodView):
     def put(self, request_id):
         """
         The user can modify a request
+        When only they are loogged in
         objective: PUT an item into the in-memory database store. If the
                    item exists, update its contents.
         :param name: str - item name
