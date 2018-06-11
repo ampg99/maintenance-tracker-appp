@@ -141,6 +141,7 @@ class LoginAPI(MethodView):
 
 
 class AllUsers(MethodView):
+    """ Logged in user gets all the requests """
     def get(self):
         headers = {'Content_type': 'application/json'}
         all_users = db.users.get_all_users()
