@@ -40,7 +40,7 @@ def admin_guard(f):
     return wrapped
 
 class SignupAPI(MethodView):
-    """User signup resource"""
+    """User signup resource authentication"""
 
     def post(self):
         # get user post data
@@ -84,7 +84,7 @@ class SignupAPI(MethodView):
             return make_response(jsonify(response)), 200
 
 class LoginAPI(MethodView):
-    """User login resource"""
+    """User login resource authentication"""
 
     def post(self):
         # get the post data
@@ -154,7 +154,7 @@ class AllUsers(MethodView):
 
 
 class LogoutAccessAPI(MethodView):
-    """ Logout Resource"""
+    """ Logout Resource for the user"""
     @jwt_required # Security authentication
     def post(self):
         # get token
