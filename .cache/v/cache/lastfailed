@@ -1,7 +1,0 @@
-{
-  "api/tests/config_test.py::TestCase": true, 
-  "api/tests/config_test.py::TestDevelopmentConfig": true, 
-  "api/tests/config_test.py::TestTestingConfig": true, 
-  "api/tests/user_model_test.py::TestUserModel": true, 
-  "api/tests/user_model_test.py::TestUserModel::()::test_encode_auth_token": true
-}
