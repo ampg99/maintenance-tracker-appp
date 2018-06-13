@@ -264,6 +264,38 @@ class AllRequests(MethodView):
         }
         return jsonify(response)
 
+class AdminManageApproveRequests(MethodView):
+    """Admin can be able to approve, reject, resolve requests"""
+    @jwt_required
+    def put(self, request_id):
+        """A method to approve a specific request with an id"""
+        item = RequestsModel.find_by_id(request_id)
+        if not item:
+            response = {
+                'status': 'error',
+                'message': f'A request with the id {request_id} is not found.'
+            }, 404
+            return make_response(jsonify(response))
+        else:
+            result = request.json
+            req, errors = db.requests.is_valid(result)
+            if errors:
+                response = {
+                    "status": "error",
+                    "message": errors
+                }
+                return make_response(jsonify(response))
+
+            item['status'] = result['status']
+
+            item.update()
+            response = {
+                'status': 'success',
+                'message': 'Request updated successfuly',
+                'Updated': item
+            }, 200
+            return make_response(jsonify(response))
+
 
 class RequestsById(MethodView):
     @jwt_required # Security authentication
@@ -362,6 +394,7 @@ logout_view_refresh = LogoutRefreshAPI.as_view('logout_api')
 request_view = RequestAPI.as_view('request_apoi')
 allrequest_view = AllRequests.as_view('requests')
 requestbyid_view = RequestsById.as_view('requestid_api')
+approve_view = AdminManageApproveRequests.as_view('approve_api')
 
 # Add rules for API endpoints
 auth_blueprint.add_url_rule(
@@ -420,5 +453,11 @@ auth_blueprint.add_url_rule(
 auth_blueprint.add_url_rule(
     '/requests/<int:request_id>',
     view_func=requestbyid_view,
+    methods=['PUT',]
+)
+
+auth_blueprint.add_url_rule(
+    '/requests/<int:request_id>/approve',
+    view_func=approve_view,
     methods=['PUT',]
 )
