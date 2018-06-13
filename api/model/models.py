@@ -52,7 +52,6 @@ class User(MainModel):
         self.password = password
         self.registered_on = datetime.now()
         self.role = User.USER_ROLE
-        rollback(User)
 
     def __repr__(self):
         return '<User(username={self.__username!r})>'.format(self=self)
