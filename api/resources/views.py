@@ -254,6 +254,7 @@ class RequestAPI(MethodView):
 
 
 class AllRequests(MethodView):
+    """Admin can get all requests on the application """
     @jwt_required # Security authentication
     def get(self):
         headers = {'Content_type': 'application/json'}
