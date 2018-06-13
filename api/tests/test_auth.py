@@ -23,7 +23,7 @@ class TestAuthBlueprint(unittest.TestCase):
             )
             data = json.loads(response.data.decode())
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 201)
+            self.assertEqual(response.status_code, 200)
 
     def test_register_with_already_registered_user_email(self):
         """Test signup with already registerd email """
@@ -39,7 +39,7 @@ class TestAuthBlueprint(unittest.TestCase):
             )
             data = json.loads(response.data.decode())
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 201)
+            self.assertEqual(response.status_code, 200)
 
     def test_registered_user_login(self):
         """Test for login of registered user login"""
