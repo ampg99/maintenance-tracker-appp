@@ -264,6 +264,40 @@ class AllRequests(MethodView):
         }
         return jsonify(response)
 
+
+class AdminManageDisapproveRequests(MethodView):
+    """Admin can be able to disapprove a request"""
+    @jwt_required
+    def put(self, request_id):
+        """A method to approve a specific request with an id"""
+        item = RequestsModel.find_by_id(request_id)
+        if not item:
+            response = {
+                'status': 'error',
+                'message': f'A request with the id {request_id} is not found.'
+            }, 404
+            return make_response(jsonify(response))
+        else:
+            result = request.json
+            req, errors = db.requests.is_valid(result)
+            if errors:
+                response = {
+                    "status": "error",
+                    "message": errors
+                }
+                return make_response(jsonify(response))
+
+            item['status'] = result['status']
+
+            item.update()
+            response = {
+                'status': 'success',
+                'message': 'Request disapproved successfuly',
+                'Updated': item
+            }, 200
+            return make_response(jsonify(response))
+
+
 class AdminManageApproveRequests(MethodView):
     """Admin can be able to approve, reject, resolve requests"""
     @jwt_required
