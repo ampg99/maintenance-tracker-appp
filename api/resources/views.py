@@ -7,10 +7,10 @@ from passlib.handlers.bcrypt import bcrypt
 from ..model.models import User, RevokedTokenModel
 from ..model.initial import db
 from flask_jwt_extended import (
-    jwt_required, 
+    jwt_required,
     create_access_token,
     create_refresh_token,
-    get_jwt_identity, 
+    get_jwt_identity,
     get_raw_jwt,
     jwt_refresh_token_required
 )
@@ -40,7 +40,7 @@ def admin_guard(f):
     return wrapped
 
 class SignupAPI(MethodView):
-    """User signup resource"""
+    """User signup resource authentication"""
 
     def post(self):
         # get user post data
@@ -84,7 +84,7 @@ class SignupAPI(MethodView):
             return make_response(jsonify(response)), 200
 
 class LoginAPI(MethodView):
-    """User login resource"""
+    """User login resource authentication"""
 
     def post(self):
         # get the post data
@@ -100,7 +100,7 @@ class LoginAPI(MethodView):
             return make_response(jsonify(resp))
 
         user = db.users.get_by_field(
-            "username", 
+            "username",
             request.json.get("username")
         )
         try:
@@ -111,14 +111,14 @@ class LoginAPI(MethodView):
         # auth_token = User.encode_auth_token(User, user['username'])
         if not user:
             response =  {
-                "status": "fail", 
+                "status": "fail",
                 "message": "Username does not exist"
             }
             return make_response(jsonify(response)), 404
 
         elif not bcrypt.verify(request.json.get("password"), user['password']):
             response =  {
-                "status": "error", 
+                "status": "error",
                 "message": "The password you provided is wrong"
             }
             return make_response(jsonify(response)), 400
@@ -141,6 +141,7 @@ class LoginAPI(MethodView):
 
 
 class AllUsers(MethodView):
+    """ Logged in user gets all the requests """
     def get(self):
         headers = {'Content_type': 'application/json'}
         all_users = db.users.get_all_users()
@@ -154,8 +155,8 @@ class AllUsers(MethodView):
 
 
 class LogoutAccessAPI(MethodView):
-    """ Logout Resource"""
-    @jwt_required
+    """ Logout Resource for the user"""
+    @jwt_required # Security authentication
     def post(self):
         # get token
         jti = get_raw_jwt()['jti']
@@ -169,13 +170,13 @@ class LogoutAccessAPI(MethodView):
 
             return make_response(jsonify(response))
         except:
-            response = {'message': 'Something went wrong'}, 500
+            response = {'status': 'success', 'message': 'Access token has been revoked'},
             return make_response(jsonify(response))
 
 
 class LogoutRefreshAPI(MethodView):
     """ Logout Resource"""
-    @jwt_refresh_token_required
+    @jwt_refresh_token_required # Security authentication
     def post(self):
         # get token
         jti = get_raw_jwt()['jti']
@@ -189,12 +190,12 @@ class LogoutRefreshAPI(MethodView):
 
             return make_response(jsonify(response))
         except:
-            response = {'message': 'Something went wrong'}, 500
+            response = {'status': 'success', 'message': 'Access token has been revoked'},
             return make_response(jsonify(response))
 
 
 class TokenRefresh(MethodView):
-    @jwt_refresh_token_required
+    @jwt_refresh_token_required # Security authentication
     def post(self):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity=current_user)
@@ -211,7 +212,7 @@ class RequestAPI(MethodView):
                         required=True,
                         help='This field cannot be left blank.')
 
-    @jwt_required
+    @jwt_required # Security authentication
     def post(self):
         """
         objective: POST an new item to item database.
@@ -225,8 +226,7 @@ class RequestAPI(MethodView):
             try:
                 my_request = RequestsModel(
                     requestname=result.get('requestname'),
-                    description=result.get('description'),
-                    owner=get_jwt_identity()
+                    description=result.get('description')
                 )
 
                 # insert the request
@@ -254,7 +254,8 @@ class RequestAPI(MethodView):
 
 
 class AllRequests(MethodView):
-    @jwt_required
+    """Admin can get all requests on the application """
+    @jwt_required # Security authentication
     def get(self):
         headers = {'Content_type': 'application/json'}
         requests = RequestsModel.find_all(self)
@@ -265,9 +266,10 @@ class AllRequests(MethodView):
 
 
 class RequestsById(MethodView):
-    @jwt_required
+    @jwt_required # Security authentication
     def get(self, request_id):
         """
+        Getting a requests for a logged in user
         objective: GET an item from item database.
         :param name: str - item name
         :return: json - item with status code
@@ -277,14 +279,14 @@ class RequestsById(MethodView):
         # user = get_jwt_identity()
         if not item:
             response = {
-                'status': 'error', 
+                'status': 'error',
                 'message': f'A request with the id {request_id} is not found.'
             }, 404
             return make_response(jsonify(response)), 404
         response = {'request': item}
         return make_response(jsonify(response)), 200
 
-    @jwt_required
+    @jwt_required # Security authentication
     def delete(self, request_id):
         """
         objective: DELETE an item from the item database.
@@ -310,9 +312,12 @@ class RequestsById(MethodView):
             }, 200
             return make_response(jsonify(response))
 
-    @jwt_required
+    @jwt_required # Security authentication
     def put(self, request_id):
         """
+        User can be able to modify requests
+        The user can modify a request
+        When only they are loogged in
         objective: PUT an item into the in-memory database store. If the
                    item exists, update its contents.
         :param name: str - item name
@@ -338,7 +343,7 @@ class RequestsById(MethodView):
 
             item['requestname'] = result['requestname']
             item['description'] = result['description']
-        
+
             item.update()
             response = {
                 'status': 'success',
@@ -346,7 +351,7 @@ class RequestsById(MethodView):
                 'Updated': item
             }, 200
             return make_response(jsonify(response))
-            
+
 
 # define the API resources
 signup_view = SignupAPI.as_view('signup')
