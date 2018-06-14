@@ -23,7 +23,6 @@ class RequestsModel:
        self.status = NEW
        self.date_modified = date_modified
        self.date_created = date_created
-       rollback(RequestsModel)
 
     def json(self):
         """
@@ -124,7 +123,7 @@ class RequestsModel:
         cursor = conn.cursor()
 
         query = "UPDATE mt_requests SET description=%s, \
-        requestname=%s, , status=%s, \
+        requestname=%s, status=%s, \
         owner=%s, date_modified=%s \
         WHERE request_id=%s"
         cursor.execute(query, (self.description, self.requestname, \

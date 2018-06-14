@@ -63,7 +63,11 @@ $ python api/run.py
 
 ```
 http://localhost:5000/api/v1/
+
 ```
+## Api documentation can be found on the url bellow
+
+https://bashtech.docs.apiary.io
 
 ## Testing
 Run pytest to test
