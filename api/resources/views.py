@@ -299,7 +299,7 @@ class AdminManageDisapproveRequests(MethodView):
 
 
 class AdminManageResolveRequests(MethodView):
-    """Admin can be able to resolve a request"""
+    """Admin can be able to resolve a request by a user"""
     @jwt_required
     def put(self, request_id):
         """A method to approve a specific request with an id"""
